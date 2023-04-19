@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
-      - name: Install pre-commit
-        run: pip install pre-commit
+      - name: Install pre-commit packages
+        run: pip install .[format]
       - name: Run pre-commit
         run: pre-commit run --all-files
