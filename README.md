@@ -2,8 +2,8 @@
 
 My opinionated python boilerplate. Not functional yet. :)
 
-![Tests](https://github.com/evmckinney9/python-template/actions/workflows/main.yml/badge.svg?branch=main&event=push&job=tests)
-![Format Check](https://github.com/evmckinney9/python-template/actions/workflows/main.yml/badge.svg?branch=main&event=push&job=format-check)
+[![Tests](https://github.com/your-username/your-repo-name/actions/workflows/ci.yml/badge.svg?event=push&branch=main&job=tests)](https://github.com/your-username/your-repo-name/actions/workflows/ci.yml?query=branch%3Amain+event%3Apush+workflow%3Aci.yml+job%3Atests)
+[![Format Check](https://github.com/your-username/your-repo-name/actions/workflows/ci.yml/badge.svg?event=push&branch=main&job=format-check)](https://github.com/your-username/your-repo-name/actions/workflows/ci.yml?query=branch%3Amain+event%3Apush+workflow%3Aci.yml+job%3Aformat-check)
 
 References:
 
