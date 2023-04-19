@@ -1,27 +1,25 @@
-[build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[metadata]
+[project]
 name = "my_package"
-version = "0.1.0"
 description = "My package description"
-author = "Evan McKinney <evmckinney9@gmail.com>"
-license = "MIT"
+version = "0.1.0"
+authors = [
+    { name = "Evan McKinney", email = "evmckinney9@gmail.com" }
+]
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "qiskit",
+    "qutip",
+    "weylchamber"
+]
 
-[options]
-packages = find:
-python_requires = ">=3.9"
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black[jupyter]",
+    "pydocstyle"
+]
 
-[options.extras_require]
-dev =
-    pytest
-    black[jupyter]
-    pydocstyle
-
-[tool.pip.dependencies]
-numpy
-matplotlib
-qiskit
-qutip
-weylchamber
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools", "wheel"]
