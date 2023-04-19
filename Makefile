@@ -13,4 +13,4 @@ install:
 test:
 	$(PYTEST) tests/
 
-.PHONY: init install requirements test
+.PHONY: init install test
