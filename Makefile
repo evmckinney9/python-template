@@ -11,6 +11,13 @@ install:
 	$(PIP) install .
 
 test:
-	$(PYTEST) tests/
+	$(PIP) install -e .[test]
+	$(PYTEST) src/tests
 
-.PHONY: init install test
+precommit:
+	$(PIP) install -e .[test]
+	$(PYTEST) src/tests
+	$(PIP) install -e .[format]
+	pre-commit run --all-files
+
+.PHONY: init install test precommit
