@@ -7,9 +7,6 @@ init:
 	$(PIP) install --upgrade pip
 	$(PIP) install -e .[dev]
 
-install:
-	$(PIP) install .
-
 test:
 	$(PIP) install -e .[test]
 	$(PYTEST) src/tests
@@ -20,4 +17,4 @@ precommit:
 	$(PIP) install -e .[format]
 	pre-commit run --all-files
 
-.PHONY: init install test precommit
+.PHONY: init test precommit
