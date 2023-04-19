@@ -8,10 +8,12 @@ class Electron:
         :param name: The name we'll call the electron. Nicknames preferred.
         :raises ValueError: You did something wrong
         """
+        self.size = size
+        self.name = name
 
     @property
     def charge(self):
-        pass
+        return -1
 
     @property
     def mass(self) -> float:
