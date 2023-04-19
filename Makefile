@@ -1,17 +1,16 @@
 PYTHON_VERSION = python3.9
+PIP = .venv/bin/pip
+PYTEST = .venv/bin/pytest
 
 init:
 	$(PYTHON_VERSION) -m venv .venv
-	.venv/bin/pip install --upgrade pip
-	.venv/bin/pip install .[dev]
+	$(PIP) install --upgrade pip
+	$(PIP) install -e .[dev]
 
 install:
-	.venv/bin/pip install .
-
-requirements:
-	.venv/bin/pip freeze > requirements.txt
+	$(PIP) install .
 
 test:
-	.venv/bin/pytest src/
+	$(PYTEST) tests/
 
 .PHONY: init install requirements test

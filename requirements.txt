@@ -1,5 +1,0 @@
-numpy
-qiskit
-qutip
-weylchamber
-matplotlib
