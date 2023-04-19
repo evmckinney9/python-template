@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[metadata]
+name = "my_package"
+version = "0.1.0"
+description = "My package description"
+author = "Evan McKinney <evmckinney9@gmail.com>"
+license = "MIT"
+
+[options]
+packages = find:
+python_requires = ">=3.9"
+
+[options.extras_require]
+dev =
+    pytest
+    black[jupyter]
+    pydocstyle
+
+[tool.pip.dependencies]
+numpy
+matplotlib
+qiskit
+qutip
+weylchamber
