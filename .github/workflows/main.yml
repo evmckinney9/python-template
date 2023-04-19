@@ -11,6 +11,7 @@ on:
 jobs:
   tests:
     name: Tests
+    id: tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -27,6 +28,7 @@ jobs:
 
   format-check:
     name: Format Check
+    id: format-check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
