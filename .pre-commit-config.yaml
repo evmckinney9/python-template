@@ -5,9 +5,17 @@ repos:
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
       - id: end-of-file-fixer
+      - id: check-docstring-first
+      - id: check-merge-conflict
       - id: check-toml
+      - id: check-yaml
+      - id: detect-private-key
       - id: check-added-large-files
-      - id: debug-statements
+      - id: forbid-submodules
+      - id: name-tests-test
+        args: [--pytest]
+      - id: pretty-format-json
+        args: [--autofix]
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: "v0.0.261"
@@ -15,9 +23,12 @@ repos:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
 
-  - repo: https://github.com/psf/black
-    rev: "23.1.0"
-    hooks:
+    repos:
+      - repo: https://github.com/psf/black
+        rev: 23.3.0
+        hooks:
+          - id: black-jupyter
+            language_version: python3.11
 
   - repo: https://github.com/pycqa/pydocstyle
     rev: 6.1.1
