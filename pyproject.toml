@@ -5,20 +5,6 @@ version = "0.1.0"
 authors = [
     { name = "Evan McKinney", email = "evmckinney9@gmail.com" }
 ]
-dependencies = [
-    "numpy",
-    "matplotlib",
-    "qiskit",
-    "qutip",
-    "weylchamber"
-]
-
-[project.optional-dependencies]
-dev = [
-    "pytest",
-    "black[jupyter]",
-    "pydocstyle"
-]
 
 [build-system]
 build-backend = "setuptools.build_meta"

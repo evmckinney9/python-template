@@ -1,5 +1,9 @@
 # python-template
+
 My opinionated python boilerplate. Not functional yet. :)
+
+![Tests](https://github.com/evmckinney9/python-template/actions/workflows/main.yml/badge.svg?branch=main&event=push&job=tests)
+![Format Check](https://github.com/evmckinney9/python-template/actions/workflows/main.yml/badge.svg?branch=main&event=push&job=format-check)
 
 References:
 
