@@ -1,6 +1,9 @@
-from src.sample.main import multiply_numbers
+from src.sample.main import Electron
 
-def test_multiply_numbers():
-    assert multiply_numbers(2, 3) == 6
-    assert multiply_numbers(-1, 1) == -1
-    assert multiply_numbers(0, 0) == 0
+def test_electron():
+    """Test the Electron class."""
+    electron = Electron()
+    assert electron.charge == -1
+    assert electron.mass == 2.1
+    assert electron.really_long_named_attribute_that_probably_does_not_fit_nicely == 2.1
+    assert electron.compute_momentum(2.1) == 4.42
