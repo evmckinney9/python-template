@@ -23,7 +23,7 @@ This project uses various tools and configurations to maintain a high standard o
 - **pre-commit**: A set of [pre-commit](https://pre-commit.com/) hooks are used to automatically check and enforce code quality standards, such as trailing whitespace removal, JSON formatting, and more.
 - **pydocstyle**: The project uses [pydocstyle](http://www.pydocstyle.org/) to enforce docstring conventions and ensure consistent documentation throughout the code.
 - **pytest**: Tests are written and executed using the [pytest](https://docs.pytest.org/en/latest/) framework.
-- **Ruff**: A high-performance Python linter built in Rust. Ruff is utilized in this project for its speed and extensive rule set. It consolidates the functionality of various tools like Flake8, isort, pydocstyle, and more, into a single, fast, and efficient package.
+- **Ruff**: A high-performance Python linter built in Rust. [Ruff](https://github.com/charliermarsh/ruff) is utilized in this project for its speed and extensive rule set. It consolidates the functionality of various tools like Flake8, isort, pydocstyle, and more, into a single, fast, and efficient package.
 
 ### References:
 
