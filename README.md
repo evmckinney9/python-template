@@ -27,8 +27,10 @@ This project uses various tools and configurations to maintain a high standard o
 
 ### References:
 
-> [1] https://github.com/qiskit-community/quantum-prototype-template/tree/main
+> [1] https://github.com/qiskit-community/quantum-prototype-template
 >
 > [2] https://duarteocarmo.com/blog/opinionated-python-boilerplate
 >
-> [3] https://github.com/Qiskit/qiskit_sphinx_theme/tree/main
+> [3] https://github.com/Qiskit/qiskit_sphinx_theme
+> [4]
+https://github.com/nbQA-dev/nbQA
