@@ -1,6 +1,6 @@
 """Test the Electron class."""
 
-from src.package_name.main import Electron
+from src.project_name.main import Electron
 
 
 def test_electron():

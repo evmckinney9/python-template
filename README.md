@@ -1,6 +1,6 @@
-# python-template
+# Python Project Template
 
-## My opinionated python boilerplate.
+## My opinionated python boilerplate.  
 
 ![Tests](https://github.com/evmckinney9/python-template/actions/workflows/tests.yml/badge.svg?branch=main)
 ![Format Check](https://github.com/evmckinney9/python-template/actions/workflows/format-check.yml/badge.svg?branch=main)
@@ -27,11 +27,14 @@ This project uses various tools and configurations to maintain a high standard o
 
 ### References:
 
-> [1] https://github.com/qiskit-community/quantum-prototype-template
+> [1] https://github.com/rochacbruno/python-project-template
 >
 > [2] https://duarteocarmo.com/blog/opinionated-python-boilerplate
 >
-> [3] https://github.com/Qiskit/qiskit_sphinx_theme
+> [3] https://simonwillison.net/2021/Aug/28/dynamic-github-repository-templates/
 >
-> [4]
-https://github.com/nbQA-dev/nbQA
+> [4] https://github.com/Qiskit/qiskit_sphinx_theme
+>
+> [5] https://github.com/qiskit-community/quantum-prototype-template
+>
+> [6] https://github.com/nbQA-dev/nbQA
