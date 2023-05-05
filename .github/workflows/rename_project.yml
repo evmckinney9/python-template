@@ -46,7 +46,7 @@ jobs:
           INFO: ${{ steps.fetch-repo-and-user-details.outputs.result }}
         run: |
           export REPO_NAME=$(echo $INFO | jq -r '.repository.name')
-          .github/scripts/rename_project.sh -a "$(echo $INFO | jq -r .repository.owner.name)" \
+          .github/scripts/rename_project.sh -a "${{ github.actor }}" \
                                     -n $REPO_NAME \
                                     -u "$(echo $INFO | jq -r .repository.owner.login)" \
                                     -d "$(echo $INFO | jq -r .repository.description)"
@@ -54,5 +54,5 @@ jobs:
       - name: Commit changes and push back to GitHub
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "✅ Initial template setup"
+          commit_message: "Initial template rename"
           push_options: --force

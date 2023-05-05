@@ -21,7 +21,8 @@ original_project_name="project_name"
 original_project_description="project_description"
 original_github_username="github_username"
 
-for filename in $(git ls-files)
+# avoid renaming things in .github folder
+for filename in $(git ls-files | grep -v '/\.')
 do
     sed -i "s/$original_author/$author_name/g" $filename
     sed -i "s/$original_project_name/$project_name/g" $filename
@@ -31,7 +32,9 @@ do
 done
 
 mv src/project_name src/$project_name
-echo "# $project_name\n\n$project_description" > README.md
+echo "# $project_name
+
+$project_description" > README.md
 
 # This command runs only once on GHA!
 rm -rf .github/template_flag.yml
