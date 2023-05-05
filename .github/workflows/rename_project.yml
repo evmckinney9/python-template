@@ -6,9 +6,10 @@ permissions: write-all
 
 jobs:
   rename-project:
-    if: ${{ !contains(github.repository, '/python-template')}} && test -f .github/template_flag.yml
+    if: ${{ !contains(github.repository, '/python-template')}}
     runs-on: ubuntu-latest
     steps:
+      - run: test -f .github/template_flag.yml || exit 0
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
