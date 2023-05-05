@@ -10,9 +10,10 @@
 | Command   | Description                                                                                             |
 | --------- | ------------------------------------------------------------------------------------------------------- |
 | `init`    | Initializes the project by creating a virtual environment, installing the necessary packages, and setting up pre-commit hooks. |
-| `test`    | Installs the required testing packages and runs the tests in the 'src/tests' directory.                |
-| `format`  | Installs the required formatting packages and runs pre-commit hooks on all files.                       |
-| `precommit` | Runs the test, installs the required formatting packages, and runs pre-commit hooks on all files.      |
+| `clean`   | Removes temporary files and directories created during development. |  
+| `test`    | Installs the required testing packages and runs the tests in the 'src/tests' directory. |
+| `format`  | Installs the required formatting packages and runs pre-commit hooks on all files. |
+| `precommit` | Runs the test, installs the required formatting packages, and runs pre-commit hooks on all files. |
 
 ### Configuration Choices
 

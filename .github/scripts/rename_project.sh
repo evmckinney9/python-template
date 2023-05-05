@@ -34,4 +34,4 @@ mv src/project_name src/$project_name
 echo "# $project_name\n\n$project_description" > README.md
 
 # This command runs only once on GHA!
-rm -rf .github/template.yml
+rm -rf .github/template_flag.yml

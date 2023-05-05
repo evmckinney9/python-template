@@ -10,7 +10,7 @@ init:
 	@$(PRE_COMMIT) install
 	@$(PRE_COMMIT) autoupdate
 
-clean:            ## Clean unused files.
+clean:
 	@find ./ -name '*.pyc' -exec rm -f {} \;
 	@find ./ -name '__pycache__' -exec rm -rf {} \;
 	@find ./ -name 'Thumbs.db' -exec rm -f {} \;
