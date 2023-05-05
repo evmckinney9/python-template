@@ -1,1 +1,1 @@
-"""main module for sample package."""
+"""Main module for sample package."""
