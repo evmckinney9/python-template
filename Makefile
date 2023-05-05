@@ -8,6 +8,7 @@ init:
 	$(PIP) install --upgrade pip
 	$(PIP) install -e .[dev]
 	$(PRE_COMMIT) install
+	$(PRE_COMMIT) autoupdate
 
 test:
 	$(PIP) install -e .[test] --quiet
