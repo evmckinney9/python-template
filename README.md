@@ -26,6 +26,12 @@ This project uses various tools and configurations to maintain a high standard o
 - **pytest**: Tests are written and executed using the [pytest](https://docs.pytest.org/en/latest/) framework.
 - **Ruff**: A high-performance Python linter built in Rust. [Ruff](https://github.com/charliermarsh/ruff) is utilized in this project for its speed and extensive rule set. It consolidates the functionality of various tools like Flake8, isort, pydocstyle, and more, into a single, fast, and efficient package.
 
+#### Change Permission of rename_project.sh
+
+```bash
+git update-index --chmod=+x .github/scripts/*.sh
+```
+
 ### References:
 
 > [1] https://github.com/rochacbruno/python-project-template
