@@ -33,7 +33,6 @@ jobs:
         run: |
           echo "The value of status is ${{ steps.checks.outputs.status }}"
           echo "The value of status is ${{env.result}}"
-          echo "The value of status is ${{jobs.check.outputs.status}}}}"
 
   rename-project:
     needs: check
