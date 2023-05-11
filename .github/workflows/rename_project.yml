@@ -14,11 +14,11 @@ jobs:
         name: Check conditions
         run: |
           if [[ "${{ github.repository }}" != */python-template* ]]; then
-            echo "::set-output name=result::success"
+            echo "result=success" >> $GITHUB_ENV
           elif [[ -f .github/template_flag.yml ]]; then
-            echo "::set-output name=result::success"
+            echo "result=success" >> $GITHUB_ENV
           else
-            echo "::set-output name=result::failure"
+            echo "result=failure" >> $GITHUB_ENV
           fi
         shell: bash
 
