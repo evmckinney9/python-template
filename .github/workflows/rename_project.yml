@@ -10,6 +10,8 @@ jobs:
     outputs:
       status: ${{ steps.checks.outputs.result }}
     steps:
+      - uses: actions/checkout@v3
+
       - id: checks
         name: Check conditions
         run: |
