@@ -7,8 +7,6 @@ permissions: write-all
 jobs:
   check:
     runs-on: ubuntu-latest
-    outputs:
-      status: ${{ steps.checks.outputs.result }}
     steps:
       - uses: actions/checkout@v3
 
@@ -24,19 +22,22 @@ jobs:
           fi
         shell: bash
 
-  debugs:
-    needs: check
-    runs-on: ubuntu-latest
-    steps:
-      - id: debug-print
-        name: Debug print
-        run: |
-          echo "The value of status is ${{ steps.checks.outputs.status }}"
-          echo "The value of status is ${{env.result}}"
+    outputs:
+      status: ${{ steps.checks.outputs.result }}
+
+  # debugs:
+  #   needs: check
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - id: debug-print
+  #       name: Debug print
+  #       run: |
+  #         echo "The value of status is ${{ steps.checks.outputs.status }}"
+  #         echo "The value of status is ${{env.result}}"
 
   rename-project:
     needs: check
-    if: ${{steps.checks.outputs.status}} == 'success'
+    if: ${{steps.checks.outputs.result}} == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
