@@ -22,7 +22,7 @@ original_project_description="project_description"
 original_github_username="github_username"
 
 # avoid renaming things in .github folder
-for filename in $(git ls-files | grep -v '/\.')
+for filename in $(git ls-files | grep -vP '(^|/)\.')
 do
     sed -i "s/$original_author/$author_name/g" $filename
     sed -i "s/$original_project_name/$project_name/g" $filename
