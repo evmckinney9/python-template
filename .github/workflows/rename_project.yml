@@ -24,6 +24,11 @@ jobs:
           fi
         shell: bash
 
+      - id: debug-check
+        name: Print output status
+        run: |
+          echo "Output status: ${{ steps.checks.outputs.result }}"
+
   rename-project:
     needs: check
     if: needs.check.outputs.status == 'success'
