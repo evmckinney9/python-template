@@ -24,14 +24,20 @@ jobs:
           fi
         shell: bash
 
-      - id: debug-check
-        name: Print output status
+  debugs:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - id: debug-print
+        name: Debug print
         run: |
-          echo "Output status: ${{ steps.checks.outputs.result }}"
+          echo "The value of status is ${{ steps.checks.outputs.status }}"
+          echo "The value of status is ${{env.result}}"
+          echo "The value of status is ${{jobs.check.outputs.status}}}}"
 
   rename-project:
     needs: check
-    if: needs.check.outputs.status == 'success'
+    if: ${{steps.checks.outputs.status}} == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
