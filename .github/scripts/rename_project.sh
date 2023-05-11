@@ -9,9 +9,10 @@ do
     esac
 done
 
-echo "Author: $author_name";
+echo "In rename_project.sh:";
 echo "Project Name: $project_name";
 echo "Description: $project_description";
+echo "Author: $author_name";
 echo "GitHub Username: $github_username";
 
 echo "Renaming project..."

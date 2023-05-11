@@ -51,9 +51,9 @@ jobs:
           REPO_DESC="$(echo $INFO | jq -r '.repository.description')"
           echo "Renaming project to $REPO_NAME"
           echo "Description: $REPO_DESC"
-          echo "Owner Name: $REPO_OWNER_NAME"
-          echo "Owner: $REPO_OWNER"
-          .github/scripts/rename_project.sh -a $REPO_OWNER_NAME -n $REPO_NAME -u $REPO_OWNER -d $REPO_DESC
+          echo "Owner name: $REPO_OWNER_NAME"
+          echo "Owner username: $REPO_OWNER"
+          .github/scripts/rename_project.sh -a "$REPO_OWNER_NAME" -n "$REPO_NAME" -u "$REPO_OWNER" -d "$REPO_DESC"
 
       - name: Commit changes and push back to GitHub
         uses: stefanzweifel/git-auto-commit-action@v4
