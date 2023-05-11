@@ -45,11 +45,10 @@ jobs:
         env:
           INFO: ${{ steps.fetch-repo-and-user-details.outputs.result }}
         run: |
-          export REPO_NAME=$(echo $INFO | jq -r '.repository.name')
-          .github/scripts/rename_project.sh -a "${{ github.actor }}" \
-                                    -n $REPO_NAME \
-                                    -u "$(echo $INFO | jq -r .repository.owner.login)" \
-                                    -d "$(echo $INFO | jq -r .repository.description)"
+          REPO_NAME=$(echo $INFO | jq -r '.repository.name')
+          REPO_OWNER=$(echo $INFO | jq -r '.repository.owner.login')
+          REPO_DESC=$(echo $INFO | jq -r '.repository.description')
+          .github/scripts/rename_project.sh -a "${{ github.actor }}" -n $REPO_NAME -u $REPO_OWNER -d $REPO_DESC
 
       - name: Commit changes and push back to GitHub
         uses: stefanzweifel/git-auto-commit-action@v4
