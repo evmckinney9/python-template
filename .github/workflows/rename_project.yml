@@ -5,11 +5,28 @@ on: [push]
 permissions: write-all
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.checks.outputs.result }}
+    steps:
+      - id: checks
+        name: Check conditions
+        run: |
+          if [[ "${{ github.repository }}" != */python-template* ]]; then
+            echo "::set-output name=result::success"
+          elif [[ -f .github/template_flag.yml ]]; then
+            echo "::set-output name=result::success"
+          else
+            echo "::set-output name=result::failure"
+          fi
+        shell: bash
+
   rename-project:
-    if: ${{ !contains(github.repository, '/python-template')}}
+    needs: check
+    if: needs.check.outputs.status == 'success'
     runs-on: ubuntu-latest
     steps:
-      - run: test -f .github/template_flag.yml || exit 0
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
