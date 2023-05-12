@@ -37,7 +37,7 @@ jobs:
 
   rename-project:
     needs: check
-    if: ${{env.result}} == 'success'
+    if: ${{env.result == 'success'}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
