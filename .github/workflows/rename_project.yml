@@ -7,10 +7,6 @@ permissions: write-all
 jobs:
   check:
     runs-on: ubuntu-latest
-
-    outputs:
-      status: ${{ steps.checks.outputs.result }}
-
     steps:
       - uses: actions/checkout@v3
 
@@ -19,16 +15,19 @@ jobs:
         run: |
           if [[ "${{ github.repository }}" != */python-template* ]] && [[ -f .github/template_flag.yml ]]; then
             echo "Entering the if condition"
-            echo "status=success" >> $GITHUB_ENV
+            echo "::set-output name=result::success"
           else
             echo "Entering the else condition"
-            echo "status=failure" >> $GITHUB_ENV
+            echo "::set-output name=result::failure"
           fi
         shell: bash
 
+    outputs:
+      status: ${{ steps.checks.outputs.result }}
+
   rename-project:
     needs: check
-    if: ${{needs.check.outputs.status == 'success'}}}
+    if: needs.check.outputs.status == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
