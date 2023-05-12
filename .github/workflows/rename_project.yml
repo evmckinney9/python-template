@@ -15,10 +15,10 @@ jobs:
         run: |
           if [[ "${{ github.repository }}" != */python-template* ]] && [[ -f .github/template_flag.yml ]]; then
             echo "Entering the if condition"
-            echo "::set-output name=result::success"
+            echo "result=success" >> $GITHUB_ENV
           else
             echo "Entering the else condition"
-            echo "::set-output name=result::failure"
+            echo "result=failure" >> $GITHUB_ENV
           fi
         shell: bash
 
@@ -27,7 +27,7 @@ jobs:
 
   rename-project:
     needs: check
-    if: needs.check.outputs.status == 'success'
+    if: env.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
