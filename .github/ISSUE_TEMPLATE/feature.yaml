@@ -1,38 +1,25 @@
-name: "\U0001F680 Feature Request"
-description: I have a suggestion \U0001F642!
-title: ""
+name: 🚀 Feature Request
+description: Suggest a new idea for the Python Project
+title: "[Feature Request]: "
 labels: ["enhancement"]
-assignees: "evmckinney9"
-
+assignees:
+  - evmckinney9
 body:
   - type: markdown
     attributes:
-    value: Please make sure to browse the opened and closed issues to make sure that this idea has not previously been discussed.
-
+      value: |
+        Thanks for taking the time to propose a new feature for our Python Project!
   - type: textarea
+    id: feature-description
     attributes:
-    label: Is your feature request related to a problem? Please describe.
-    description: A clear and concise description of what the problem is. Ex. I have an issue when [...]
+      label: Feature Description and Why
+      placeholder: Describe the feature you want to see and why...
     validations:
-    required: true
-
+      required: true
   - type: textarea
+    id: more-details
     attributes:
-    label: Describe the solution you'd like
-    description: A clear and concise description of what you want to happen. Add any considered drawbacks.
+      label: Additional Details / Helpful Resources
+      placeholder: Please provide more details or point us to any helpful resources.
     validations:
-    required: true
-
-  - type: textarea
-    attributes:
-    label: Describe alternatives you've considered
-    description: A clear and concise description of any alternative solutions or features you've considered.
-    validations:
-    required: false
-
-  - type: textarea
-    attributes:
-    label: Teachability, Documentation, Adoption, Migration Strategy
-    description: If you can, explain how users will be able to use this and possibly write out a version of the docs. Maybe include a screenshot or design?
-    validations:
-    required: false
+      required: false
