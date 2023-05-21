@@ -13,7 +13,7 @@ git add .
 git commit
 ```
 
-If commit command makes changes, then rerun `git add .` and `git commit` until all tests pass.
+If commit command makes changes (e.g. auto-fix formatting), then rerun `git add .` and `git commit` until all tests pass.
 
 ## Getting Started
 
