@@ -1,23 +1,39 @@
----
 name: "\U0001F680 Feature Request"
-about: "I have a suggestion \U0001F642!"
+description: I have a suggestion \U0001F642!
 title: ''
-labels: 'enhancement'
+labels: ['enhancement']
 assignees: 'evmckinney9'
 
----
+body:
 
-## Feature Request
+- type: markdown
+  attributes:
+  value: Please make sure to browse the opened and closed issues to make sure that this idea has not previously been discussed.
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I have an issue when [...]
+- type: textarea
+  attributes:
+  label: Is your feature request related to a problem? Please describe.
+  description: A clear and concise description of what the problem is. Ex. I have an issue when [...]
+  validations:
+  required: true
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen. Add any considered drawbacks.
+- type: textarea
+  attributes:
+  label: Describe the solution you'd like
+  description: A clear and concise description of what you want to happen. Add any considered drawbacks.
+  validations:
+  required: true
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+- type: textarea
+  attributes:
+  label: Describe alternatives you've considered
+  description: A clear and concise description of any alternative solutions or features you've considered.
+  validations:
+  required: false
 
-**Teachability, Documentation, Adoption, Migration Strategy**
-If you can, explain how users will be able to use this and possibly write out a version the docs.
-Maybe a screenshot or design?
+- type: textarea
+  attributes:
+  label: Teachability, Documentation, Adoption, Migration Strategy
+  description: If you can, explain how users will be able to use this and possibly write out a version of the docs. Maybe include a screenshot or design?
+  validations:
+  required: false
