@@ -1,11 +1,22 @@
 # Python Project Template
 
-## My opinionated python boilerplate.  
+## My opinionated python boilerplate.
 
 ![Tests](https://github.com/evmckinney9/python-template/actions/workflows/tests.yml/badge.svg?branch=main)
 ![Format Check](https://github.com/evmckinney9/python-template/actions/workflows/format-check.yml/badge.svg?branch=main)
 
+### Git Quick Reference
+
+```bash
+make precommit
+git add .
+git commit
+```
+
+If commit command makes changes, then rerun `git add .` and `git commit` until all tests pass.
+
 ## Getting Started
+
 This repository is a template for creating new Python(3.9) projects. To use this template, click the "Use this template" button at the top of the repository page.
 
 The `rename_project.sh` script will automatically rename all instances of the original project name, author name, and other details to match your new repository. The template uses Github Actions to automatically run this script when a new repository is created from the template. Before cloning, wait a moment for the renaming process to complete.
@@ -15,6 +26,7 @@ Once cloned, run the following to install the python package and its dependencie
 ```bash
 make init
 ```
+
 To add a new pip package, modify the `setup.cfg` file and add the package name to the `install_requires` list.
 
 On every commit, the pre-commit hooks will run after `git commit` to ensure that the code is properly formatted and passes all tests. If the hooks exit with failure, either (a) fix the errors and commit again, or (b) the errors were automatically fixed and you need to `git add` the changes and commit again.
@@ -27,13 +39,28 @@ make precommit
 
 ### Available Make Commands
 
-| Command   | Description                                                                                             |
-| --------- | ------------------------------------------------------------------------------------------------------- |
-| `init`    | Initializes the project by creating a virtual environment, installing the necessary packages, and setting up pre-commit hooks. |
-| `clean`   | Removes temporary files and directories created during development. |  
-| `test`    | Installs the required testing packages and runs the tests in the 'src/tests' directory. |
-| `format`  | Installs the required formatting packages and runs pre-commit hooks on all files. |
-| `precommit` | Runs the test, installs the required formatting packages, and runs pre-commit hooks on all files. |
+| Command     | Description                                                                                                                    |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `init`      | Initializes the project by creating a virtual environment, installing the necessary packages, and setting up pre-commit hooks. |
+| `clean`     | Removes temporary files and directories created during development.                                                            |
+| `test`      | Installs the required testing packages and runs the tests in the 'src/tests' directory.                                        |
+| `format`    | Installs the required formatting packages and runs pre-commit hooks on all files.                                              |
+| `precommit` | Runs the test, installs the required formatting packages, and runs pre-commit hooks on all files.                              |
+
+### Opencommit
+
+Auto-generated commit messages using [opencommit](https://github.com/di-sukharev/opencommit).
+
+Initial setup (per machine):
+
+```bash
+npm install -g opencommit
+opencommit config set OPENAI_API_KEY=<your_api_key>
+oc config set emoji=true
+oc config set description=true
+```
+
+The Makefile's init command includes `oc hook set`, which sets opencommit as a prepare-commit msg hook. (May need to change permissions of `.git/hooks/prepare-commit-msg` to allow execution.)
 
 ### Configuration Choices
 
