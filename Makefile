@@ -9,6 +9,7 @@ init:
 	$(PIP) install -e .[dev]
 	@$(PRE_COMMIT) install
 	@$(PRE_COMMIT) autoupdate
+	opencommit hook set
 
 clean:
 	@find ./ -type f -name '*.pyc' -exec rm -f {} \; 2>/dev/null || true
