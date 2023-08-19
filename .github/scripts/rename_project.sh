@@ -36,6 +36,7 @@ mv src/project_name src/$project_name
 
 # Copy the content of template-README.md to README.md
 cp template-README.md README.md
+rm template-README.md
 
 # This command runs only once on GHA!
 rm -rf .github/template_flag.yml
