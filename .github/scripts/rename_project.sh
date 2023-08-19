@@ -33,12 +33,9 @@ do
 done
 
 mv src/project_name src/$project_name
-echo "# $project_name
 
-![Tests](https://github.com/$github_username/$project_name/actions/workflows/tests.yml/badge.svg?branch=main)
-![Format Check](https://github.com/$github_username/$project_name/actions/workflows/format-check.yml/badge.svg?branch=main)
-
-$project_description" > README.md
+# Copy the content of template-README.md to README.md
+cp template-README.md README.md
 
 # This command runs only once on GHA!
 rm -rf .github/template_flag.yml
