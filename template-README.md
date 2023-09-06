@@ -1,4 +1,4 @@
-# project_name
+# `project_name`
 
 [Link to paper:](https://arxiv.org/)
 
@@ -8,8 +8,11 @@
 ## 📌 Project Overview
 
 - **Overview**: project_description
-- **Objective**:
-- **Strategy**:
+- **Objective**: 
+- **Strategy**: 
+
+> [!IMPORTANT]  
+> This is an important note. Make sure to fill out the "Overview," "Objective," and "Strategy" sections with specific information about your project.
 
 ## 🌟 Key Features
 
@@ -17,18 +20,21 @@
 
 ![image](https://github.com/$github_username/$project_name/images/plot.png)
 
+> [!WARNING]  
+> This is a warning. Ensure to understand the algorithm and its limitations.
+
 ## 📊 Results & Comparisons
 
 - **Experiments**: Detailed in `src/notebooks/results`
-- **Findings**:
+- **Findings**: 
 
-![image](https://github.com/$github_username/project_name/images/plot.png)
+![image](https://github.com/$github_username/$project_name/images/plot.png)
 
 ## 🚀 Getting Started
 
-To use ..., install using ...
+To use ..., install using the following command:
 
-```
+```bash
 pip install -e git+https://github.com/github_username/project_name#egg=project_name
 ```
 
@@ -41,13 +47,16 @@ from project_name import *
 Foo()
 ```
 
+> [!NOTE]  
+> This is an important note. Make sure to consult the demo notebook for usage examples.
+
 ### 📋 Prerequisites
 
-- **Package Dependencies**:
+- **Package Dependencies**: 
 
   - `package_name`
 
-- **Installation**:
+- **Installation**: 
 
   - More details as needed.
 
