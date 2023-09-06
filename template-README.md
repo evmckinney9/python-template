@@ -1,4 +1,4 @@
-# `project_name`
+![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=120&text=project_name&fontSize=40&animation=fadeIn&fontAlignY=30&theme=cobalt)
 
 [Link to paper:](https://arxiv.org/)
 
