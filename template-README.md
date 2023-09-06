@@ -8,8 +8,8 @@
 ## 📌 Project Overview
 
 - **Overview**: project_description
-- **Objective**: 
-- **Strategy**: 
+- **Objective**:
+- **Strategy**:
 
 > [!IMPORTANT]  
 > This is an important note. Make sure to fill out the "Overview," "Objective," and "Strategy" sections with specific information about your project.
@@ -26,7 +26,7 @@
 ## 📊 Results & Comparisons
 
 - **Experiments**: Detailed in `src/notebooks/results`
-- **Findings**: 
+- **Findings**:
 
 ![image](https://github.com/$github_username/$project_name/images/plot.png)
 
@@ -52,11 +52,11 @@ Foo()
 
 ### 📋 Prerequisites
 
-- **Package Dependencies**: 
+- **Package Dependencies**:
 
   - `package_name`
 
-- **Installation**: 
+- **Installation**:
 
   - More details as needed.
 

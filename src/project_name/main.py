@@ -8,7 +8,8 @@ class Electron:
         """Create an electron.
 
         :param size: How big should this thing be?
-        :param name: The name we'll call the electron. Nicknames preferred.
+        :param name: The name we'll call the electron. Nicknames
+            preferred.
         :raises ValueError: You did something wrong
         """
         self.size = size
