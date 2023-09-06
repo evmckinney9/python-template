@@ -1,12 +1,10 @@
 ![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=120&text=project_name&fontSize=40&animation=fadeIn&fontAlignY=30&theme=cobalt)
 
-[Link to paper:](https://arxiv.org/)
-
 ![Tests](https://github.com/github_username/project_name/actions/workflows/tests.yml/badge.svg?branch=main)
 ![Format Check](https://github.com/github_username/project_name/actions/workflows/format-check.yml/badge.svg?branch=main)
 
 ## 📌 Project Overview
-
+- [Link to paper:](https://arxiv.org/)
 - **Overview**: project_description
 - **Objective**:
 - **Strategy**:
@@ -85,7 +83,7 @@ Additional utility commands available in the Makefile:
       primaryClass={{PrimaryClass}}
 }
 ```
-https://github.com/github_username/project_name/
+
 ## 👯 Contributors
 <a href = "https://github.com/github_username/project_name/graphs/contributors">
   <img src = "https://contrib.rocks/image?repo=github_username/project_name"/>
