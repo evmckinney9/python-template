@@ -18,7 +18,7 @@
 
 - **Algorithm**: Defined in `src/**.py`
 
-![image](https://github.com/$github_username/$project_name/images/plot.png)
+![image](https://github.com/github_username/project_name/images/plot.png)
 
 > [!WARNING]  
 > This is a warning. Ensure to understand the algorithm and its limitations.
@@ -28,7 +28,7 @@
 - **Experiments**: Detailed in `src/notebooks/results`
 - **Findings**:
 
-![image](https://github.com/$github_username/$project_name/images/plot.png)
+![image](https://github.com/github_username/project_name/images/plot.png)
 
 ## 🚀 Getting Started
 
@@ -85,3 +85,8 @@ Additional utility commands available in the Makefile:
       primaryClass={{PrimaryClass}}
 }
 ```
+https://github.com/github_username/project_name/
+## 👯 Contributors
+<a href = "https://github.com/github_username/project_name/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo=github_username/project_name"/>
+</a>
