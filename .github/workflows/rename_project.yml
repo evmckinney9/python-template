@@ -5,22 +5,16 @@ on: [push]
 permissions: write-all
 
 jobs:
-  check-condition:
+  rename-project:
     if: github.repository != 'evmckinney9/python-template'
     runs-on: ubuntu-latest
-    outputs:
-      should_run_rename: ${{ steps.check-template.outputs.should_run_rename }}
     steps:
-      - uses: actions/checkout@v3
-      - id: check-template
-        if: ${{ hashFiles('.github/template_flag.yml') != '' }}
-        run: echo "::set-output name=should_run_rename::true"
+      - name: Check if template_flag.yml exists
+        if: ${{ hashFiles('.github/template_flag.yml') == '' }}
+        run: |
+          echo "template_flag.yml doesn't exist. Exiting early."
+          exit 0
 
-  rename-project:
-    needs: check-condition
-    if: needs.check-condition.outputs.should_run_rename == 'true'
-    runs-on: ubuntu-latest
-    steps:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}

@@ -9,23 +9,16 @@ on:
       - main
 
 jobs:
-  check-condition:
+  run-test:
     if: github.repository != 'evmckinney9/python-template'
     runs-on: ubuntu-latest
-    outputs:
-      should_run_tests: ${{ steps.check-template.outputs.should_run_tests }}
     steps:
       - uses: actions/checkout@v3
-      - id: check-template
-        if: ${{ hashFiles('.github/template_flag.yml') == '' }}
-        run: echo "::set-output name=should_run_tests::true"
-
-  run-test:
-    needs: check-condition
-    if: needs.check-condition.outputs.should_run_tests == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+      - name: Check if template_flag.yml exists
+        if: ${{ hashFiles('.github/template_flag.yml') != '' }}
+        run: |
+          echo "template_flag.yml exists. Exiting early."
+          exit 0
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
