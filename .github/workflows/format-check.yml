@@ -9,8 +9,20 @@ on:
       - main
 
 jobs:
-  run-format-check:
+  check-condition:
     if: github.repository != 'evmckinney9/python-template'
+    runs-on: ubuntu-latest
+    outputs:
+      should_run_format: ${{ steps.check-template.outputs.should_run_format }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: check-template
+        if: ${{ hashFiles('.github/template_flag.yml') == '' }}
+        run: echo "::set-output name=should_run_format::true"
+
+  run-format-check:
+    needs: check-condition
+    if: needs.check-condition.outputs.should_run_format == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
