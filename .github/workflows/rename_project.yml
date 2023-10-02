@@ -48,13 +48,6 @@ jobs:
             console.log(result)
             return result
 
-      - name: Overlay project name on banner
-        if: env.rename_continue == 'true'
-        run: |
-          REPO_NAME=$(echo ${{ steps.fetch-repo-and-user-details.outputs.result }} | jq -r '.repository.name')
-          convert .github/banner.png -gravity center -pointsize 30 -fill black -stroke white -strokewidth 2 -annotate +0+0 "$REPO_NAME" .github/output_banner.png
-          mv .github/output_banner.png .github/banner.png
-
       - name: Rename the project
         if: env.rename_continue == 'true'
         env:
@@ -69,6 +62,12 @@ jobs:
           echo "Owner name: $REPO_OWNER_NAME"
           echo "Owner username: $REPO_OWNER"
           .github/scripts/rename_project.sh -a "$REPO_OWNER_NAME" -n "$REPO_NAME" -u "$REPO_OWNER" -d "$REPO_DESC"
+
+      - name: Overlay project name on banner
+        if: env.rename_continue == 'true'
+        run: |
+          convert .github/banner.png -gravity center -pointsize 30 -fill black -stroke white -strokewidth 2 -annotate +0+0 "$REPO_NAME" .github/output_banner.png
+          mv .github/output_banner.png .github/banner.png
 
       - name: Commit changes and push back to GitHub
         if: env.rename_continue == 'true'
