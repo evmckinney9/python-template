@@ -1,1 +1,1 @@
-"""Main module for project_name."""
+"""Main module for {{project_name}}."""

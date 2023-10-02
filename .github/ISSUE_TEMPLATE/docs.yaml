@@ -3,7 +3,7 @@ description: Request an update to the Python Project Documentation
 title: "[Documentation]: "
 labels: ["documentation"]
 assignees:
-  - evmckinney9
+  - {{github_username}}
 body:
   - type: markdown
     attributes:
