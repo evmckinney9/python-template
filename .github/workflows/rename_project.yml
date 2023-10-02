@@ -6,19 +6,31 @@ permissions: write-all
 
 jobs:
   rename-project:
-    if: ${{ github.repository != 'evmckinney9/python-template' && -f .github/template_flag.yml }}
+    if: github.repository != 'evmckinney9/python-template'
     runs-on: ubuntu-latest
     steps:
+      - name: Check for template_flag.yml
+        id: check-template
+        shell: bash
+        run: |
+          if [[ -f .github/template_flag.yml ]]; then
+            echo "::set-output name=exists::true"
+          else
+            echo "::set-output name=exists::false"
+          fi
+
       - uses: actions/checkout@v3
+        if: steps.check-template.outputs.exists == 'true'
         with:
           ref: ${{ github.head_ref }}
 
       - uses: actions/github-script@v6
         id: fetch-repo-and-user-details
+        if: steps.check-template.outputs.exists == 'true'
         with:
           script: |
             const query = `query($owner:String!, $name:String!) {
-              repository(owner:$owner, name:$name) {
+              repository(owner:$owner, name=$name) {
                 name
                 description
                 owner {
@@ -41,6 +53,7 @@ jobs:
             return result
 
       - name: Rename the project
+        if: steps.check-template.outputs.exists == 'true'
         env:
           INFO: ${{ steps.fetch-repo-and-user-details.outputs.result }}
         run: |
@@ -55,6 +68,7 @@ jobs:
           .github/scripts/rename_project.sh -a "$REPO_OWNER_NAME" -n "$REPO_NAME" -u "$REPO_OWNER" -d "$REPO_DESC"
 
       - name: Commit changes and push back to GitHub
+        if: steps.check-template.outputs.exists == 'true'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Initial template rename"
