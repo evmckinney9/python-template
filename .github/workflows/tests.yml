@@ -10,6 +10,7 @@ on:
 
 jobs:
   run-tests:
+    if: github.repository != 'evmckinney9/python-template'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

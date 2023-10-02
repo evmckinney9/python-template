@@ -5,35 +5,9 @@ on: [push]
 permissions: write-all
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
-    outputs:
-      STATUS: ${{ steps.checks.outputs.STATUS }}
-    steps:
-      - uses: actions/checkout@v3
-
-      - id: checks
-        name: Check conditions
-        run: |
-          if [[ "${{ github.repository }}" != */python-template* ]] && [[ -f .github/template_flag.yml ]]; then
-            echo "Entering the if condition"
-            echo "STATUS=success" >> $GITHUB_OUTPUT
-          else
-            echo "Entering the else condition"
-            echo "STATUS=failure" >> $GITHUB_OUTPUT
-          fi
-        shell: bash
-
-  # debug-job:
-  #   needs: check
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - run: |
-  #         echo "The status is ${{ needs.check.outputs.STATUS }}"
-
   rename-project:
     needs: check
-    if: needs.check.outputs.STATUS == 'success'
+    if: github.repository != 'your-username-or-org/python-template' && contains(github.workspace, '.github/template_flag.yml')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
