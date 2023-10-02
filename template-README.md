@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=120&text={{project_name}}&fontSize=40&animation=fadeIn&fontAlignY=30&theme=cobalt)
+![Project Banner](.github/banner.png)
 
 ![Tests](https://github.com/{{github_username}}/{{project_name}}/actions/workflows/tests.yml/badge.svg?branch=main)
 ![Format Check](https://github.com/{{github_username}}/{{project_name}}/actions/workflows/format-check.yml/badge.svg?branch=main)
