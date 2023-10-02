@@ -67,7 +67,9 @@ jobs:
         if: env.rename_continue == 'true'
         run: |
           convert .github/banner.png -gravity center -pointsize 300 -fill black -stroke white -strokewidth 2 -annotate +0+0 "$REPO_NAME" .github/output_banner.png
-          mv .github/output_banner.png .github/banner.png
+          ls -l .github/
+          file .github/output_banner.png
+          convert --version
 
       - name: Commit changes and push back to GitHub
         if: env.rename_continue == 'true'
