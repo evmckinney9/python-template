@@ -1,7 +1,7 @@
 ![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=120&text={{project_name}}&fontSize=40&animation=fadeIn&fontAlignY=30&theme=cobalt)
 
-![Tests](https://github.com/github_username/{{project_name}}/actions/workflows/tests.yml/badge.svg?branch=main)
-![Format Check](https://github.com/github_username/{{project_name}}/actions/workflows/format-check.yml/badge.svg?branch=main)
+![Tests](https://github.com/{{github_username}}/{{project_name}}/actions/workflows/tests.yml/badge.svg?branch=main)
+![Format Check](https://github.com/{{github_username}}/{{project_name}}/actions/workflows/format-check.yml/badge.svg?branch=main)
 
 ## 📌 Project Overview
 - [Link to paper:](https://arxiv.org/)
@@ -16,7 +16,7 @@
 
 - **Algorithm**: Defined in `src/**.py`
 
-![image](https://github.com/github_username/{{project_name}}/images/plot.png)
+![image](https://github.com/{{github_username}}/{{project_name}}/images/plot.png)
 
 > [!WARNING]  
 > This is a warning. Ensure to understand the algorithm and its limitations.
@@ -26,14 +26,14 @@
 - **Experiments**: Detailed in `src/notebooks/results`
 - **Findings**:
 
-![image](https://github.com/github_username/{{project_name}}/images/plot.png)
+![image](https://github.com/{{github_username}}/{{project_name}}/images/plot.png)
 
 ## 🚀 Getting Started
 
 To use ..., install using the following command:
 
 ```bash
-pip install -e git+https://github.com/github_username/{{project_name}}#egg={{project_name}}
+pip install -e git+https://github.com/{{github_username}}/{{project_name}}#egg={{project_name}}
 ```
 
 Then get started by exploring the main demo located at `src/mirror_gates/notebooks/bench.ipynb`.
@@ -85,6 +85,6 @@ Additional utility commands available in the Makefile:
 ```
 
 ## 👯 Contributors
-<a href = "https://github.com/github_username/{{project_name}}/graphs/contributors">
-  <img src = "https://contrib.rocks/image?repo=github_username/{{project_name}}"/>
+<a href = "https://github.com/{{github_username}}/{{project_name}}/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo={{github_username}}/{{project_name}}"/>
 </a>
