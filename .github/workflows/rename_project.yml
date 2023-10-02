@@ -6,7 +6,6 @@ permissions: write-all
 
 jobs:
   rename-project:
-    needs: check
     if: github.repository != 'your-username-or-org/python-template' && contains(github.workspace, '.github/template_flag.yml')
     runs-on: ubuntu-latest
     steps:
