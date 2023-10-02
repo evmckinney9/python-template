@@ -10,16 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check if template_flag.yml exists
-        if: ${{ hashFiles('.github/template_flag.yml') == '' }}
+        id: check-template
+        if: ${{ hashFiles('.github/template_flag.yml') != '' }}
         run: |
-          echo "template_flag.yml doesn't exist. Exiting early."
-          exit 0
+            echo "rename_continue=true" >> $GITHUB_ENV
 
       - uses: actions/checkout@v3
+        if: env.rename_continue == 'true'
         with:
           ref: ${{ github.head_ref }}
 
       - uses: actions/github-script@v6
+        if: env.rename_continue == 'true'
         id: fetch-repo-and-user-details
         with:
           script: |
@@ -47,7 +49,7 @@ jobs:
             return result
 
       - name: Rename the project
-        if: steps.check-template.outputs.exists == 'true'
+        if: env.rename_continue == 'true'
         env:
           INFO: ${{ steps.fetch-repo-and-user-details.outputs.result }}
         run: |
@@ -62,7 +64,7 @@ jobs:
           .github/scripts/rename_project.sh -a "$REPO_OWNER_NAME" -n "$REPO_NAME" -u "$REPO_OWNER" -d "$REPO_DESC"
 
       - name: Commit changes and push back to GitHub
-        if: steps.check-template.outputs.exists == 'true'
+        if: env.rename_continue == 'true'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Initial template rename"
