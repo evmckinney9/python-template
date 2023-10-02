@@ -13,13 +13,13 @@ jobs:
     if: github.repository != 'evmckinney9/python-template'
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: Check if template_flag.yml is gone
         id: check-template
         if: ${{ hashFiles('.github/template_flag.yml') == '' }}
         run: |
           echo "test_continue=true" >> $GITHUB_ENV
-
-      - uses: actions/checkout@v3
 
       - name: Set up Python
         if: env.test_continue == 'true'
