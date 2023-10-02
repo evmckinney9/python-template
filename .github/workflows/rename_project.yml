@@ -6,7 +6,7 @@ permissions: write-all
 
 jobs:
   rename-project:
-    if: ${{ github.repository != 'evmckinney9/python-template' && hashFiles('.github/template_flag.yml') != '' }}
+    if: ${{ github.repository != 'evmckinney9/python-template' && -f .github/template_flag.yml }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
