@@ -67,7 +67,7 @@ jobs:
       - name: Overlay project name on banner
         if: env.rename_continue == 'true'
         run: |
-          convert .github/banner.png -gravity center -pointsize 300 -fill black -stroke white -strokewidth 2 -annotate +0+0 "${{ env.REPO_NAME }}" .github/output_banner.png
+          convert .github/banner.png -gravity center -pointsize 300 -fill black -stroke white -strokewidth 2 -font "Lato-Heavy" -annotate +0+0 "${{ env.REPO_NAME }}" .github/output_banner.png
           mv .github/output_banner.png .github/banner.png
 
       - name: Commit changes and push back to GitHub
