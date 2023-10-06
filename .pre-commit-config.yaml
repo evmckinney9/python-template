@@ -7,6 +7,11 @@ repos:
     hooks:
       - id: enforce-notebook-naming
 
+  - repo: https://github.com/qoomon/git-conventional-commits
+    rev: v2.6.5
+    hooks:
+      - id: conventional-commits
+
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: "v0.0.292"
     hooks:
