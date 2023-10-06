@@ -3,7 +3,7 @@ description: File a bug report for Python Project
 title: "[Bug]: "
 labels: ["bug", "triage"]
 assignees:
-  - evmckinney9
+  - {{github_username}}
 body:
   - type: markdown
     attributes:
@@ -14,12 +14,5 @@ body:
     attributes:
       label: Bug Description
       placeholder: Describe the bug you encountered here...
-    validations:
-      required: true
-  - type: input
-    id: version
-    attributes:
-      label: Version
-      placeholder: Enter the software version
     validations:
       required: true

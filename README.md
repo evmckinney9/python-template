@@ -2,9 +2,6 @@
 
 ## My opinionated python boilerplate.
 
-![Tests](https://github.com/evmckinney9/python-template/actions/workflows/tests.yml/badge.svg?branch=main)
-![Format Check](https://github.com/evmckinney9/python-template/actions/workflows/format-check.yml/badge.svg?branch=main)
-
 ### Git Quick Reference
 
 ```bash

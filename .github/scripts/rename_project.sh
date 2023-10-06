@@ -17,13 +17,13 @@ echo "GitHub Username: $github_username";
 
 echo "Renaming project..."
 
-original_author="author_name"
-original_project_name="project_name"
-original_project_description="project_description"
-original_github_username="github_username"
+original_author="{{author_name}}"
+original_project_name="{{project_name}}"
+original_project_description="{{project_description}}"
+original_github_username="{{github_username}}"
 
-# avoid renaming things in .github folder
-for filename in $(git ls-files | grep -vP '(^|/)\.')
+# avoid renaming in .github/scripts/rename_project.sh
+for filename in $(git ls-files | grep -vP '^\.github/scripts/rename_project\.sh$')
 do
     sed -i "s/$original_author/$author_name/g" $filename
     sed -i "s/$original_project_name/$project_name/g" $filename
