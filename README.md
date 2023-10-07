@@ -45,21 +45,6 @@ make precommit
 | `format`        | Installs the required formatting packages and runs pre-commit hooks on all files.                                                                          |
 | **`precommit`** | Runs the test, installs the required formatting packages, and runs pre-commit hooks on all files.                                                          |
 
-### Opencommit
-
-Auto-generated commit messages using [opencommit](https://github.com/di-sukharev/opencommit).
-
-Initial setup (per machine):
-
-```bash
-npm install -g opencommit
-opencommit config set OPENAI_API_KEY=<your_api_key>
-oc config set emoji=true
-oc config set description=true
-```
-
-The Makefile's init command includes `oc hook set`, which sets opencommit as a prepare-commit msg hook. (May need to change permissions of `.git/hooks/prepare-commit-msg` to allow execution.)
-
 ### Configuration Choices
 
 This project uses various tools and configurations to maintain a high standard of code quality and consistency:

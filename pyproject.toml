@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "{{project_name}}"
 description = "{{project_description}}"
 version = "0.1.0"
-authors = [{name = "{{author_name}}"}]
+authors = [{ name = "{{author_name}}" }]
 requires-python = ">=3.9"
 dependencies = [
     "numpy",
@@ -14,15 +14,11 @@ dependencies = [
     "qutip",
     "weylchamber",
     "matplotlib",
-    "LovelyPlots"
+    "LovelyPlots",
 ]
 
 [project.optional-dependencies]
-dev = [
-    "ipykernel",
-    "pre-commit",
-    "pylatexenc"
-]
+dev = ["ipykernel", "pre-commit", "pylatexenc"]
 format = [
     "pre-commit",
     "black[jupyter]",
@@ -30,7 +26,7 @@ format = [
     "tomli",
     "pydocstyle",
     "ruff",
-    "docformatter[tomli]"
+    "docformatter[tomli]",
 ]
 test = ["pytest"]
 

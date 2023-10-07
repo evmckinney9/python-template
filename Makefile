@@ -11,7 +11,6 @@ init:
 	@$(PRE_COMMIT) install
 	@$(PRE_COMMIT) autoupdate
 	sudo chmod +x .git/hooks/pre-commit
-	opencommit hook set
 
 upgrade:
 	$(PIP) install --upgrade pip
