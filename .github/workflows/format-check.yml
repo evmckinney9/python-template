@@ -3,7 +3,7 @@ name: Format Check
 on:
   push:
     branches:
-      - dev  # Runs on pushes to dev branch
+      - main  # Runs on pushes to main branch
   pull_request:
     branches:
       - main  # Runs on PRs to main branch
