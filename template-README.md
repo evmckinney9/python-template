@@ -2,7 +2,7 @@
 
 ![Tests](https://github.com/{{github_username}}/{{project_name}}/actions/workflows/tests.yml/badge.svg?branch=main)
 ![Format Check](https://github.com/{{github_username}}/{{project_name}}/actions/workflows/format-check.yml/badge.svg?branch=main)
-<a href="https://colab.research.google.com/github/{{github_username}}/{{project_name}}/blob/main/src/notebooks/main.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+<a href="https://colab.research.google.com/github/{{github_username}}/{{project_name}}/blob/main/src/notebooks/01_main.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 ## 📌 Project Overview
 - [Link to paper:](https://arxiv.org/)
