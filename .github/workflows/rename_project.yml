@@ -1,12 +1,13 @@
 name: Rename the project from template
 
-on: [push]
+on:
+  create
 
 permissions: write-all
 
 jobs:
   rename-project:
-    if: github.repository != 'evmckinney9/python-template'
+    if: github.repository != 'evmckinney9/python-template' && github.event.ref == github.event.master_branch
     runs-on: ubuntu-latest
     steps:
 

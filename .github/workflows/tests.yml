@@ -3,10 +3,10 @@ name: Tests
 on:
   push:
     branches:
-      - main
+      - dev  # Runs on pushes to dev branch
   pull_request:
     branches:
-      - main
+      - main  # Runs on PRs to main branch
 
 jobs:
   run-test:
