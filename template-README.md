@@ -31,7 +31,7 @@
 
 ## 🚀 Getting Started
 
-To use ..., install using the following command:
+To use {{project_name}}, install using the following command:
 
 ```bash
 pip install -e git+https://github.com/{{github_username}}/{{project_name}}#egg={{project_name}}
