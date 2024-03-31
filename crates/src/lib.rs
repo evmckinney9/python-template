@@ -1,14 +1,12 @@
-//src/lib.rs
-
-pub mod basic_functions;
-use crate::basic_functions::*;
+// crates/src/lib.rs
 
 use pyo3::prelude::*;
+use pyo3::wrap_pymodule;
+
+mod basic_functions;
 
 #[pymodule]
-fn quippers(_py: Python, m: &PyModule) -> PyResult<()> {
-    m.add_function(wrap_pyfunction!(basic_math::add_in_rust, m)?)?;
-    m.add_function(wrap_pyfunction!(basic_math::subtract_in_rust, m)?)?;
-
+fn _accelerate(_py: Python<'_>, m: &PyModule) -> PyResult<()> {
+    m.add_wrapped(wrap_pymodule!(basic_functions::basic_functions))?;
     Ok(())
 }

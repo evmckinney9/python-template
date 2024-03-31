@@ -10,11 +10,11 @@ authors = [{ name = "{{author_name}}" }]
 requires-python = ">=3.9"
 dependencies = [
     "numpy",
-    "qiskit",
-    "qutip",
-    "weylchamber",
     "matplotlib",
     "LovelyPlots",
+    # "qiskit",
+    # "qutip",
+    # "weylchamber",
 ]
 
 [project.optional-dependencies]
@@ -40,7 +40,7 @@ profile = "black"
 [[tool.setuptools-rust.ext-modules]]
 # Private Rust extension module to be nested into the Python package
 # https://github.com/PyO3/setuptools-rust?tab=readme-ov-file
-target = "rust_demo._lib" # The last part of the name (e.g. "_lib") has to match lib.name in Cargo.toml,
+target = "{{project_name}}._accelerate" # The last part of the name (e.g. "_lib") has to match lib.name in Cargo.toml,
 # but you can add a prefix to nest it inside of a Python package.
 path = "crates/Cargo.toml"
 binding = "PyO3"
