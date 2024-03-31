@@ -37,7 +37,7 @@ To use {{project_name}}, install using the following command:
 pip install -e git+https://github.com/{{github_username}}/{{project_name}}#egg={{project_name}}
 ```
 
-Then get started by exploring the main demo located at `src/mirror_gates/notebooks/bench.ipynb`.
+Then get started by exploring the main demo located at `src/{{project_name}}/notebooks/01_main.ipynb`.
 
 ### 💻🐒 Usage
 
