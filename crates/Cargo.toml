@@ -1,14 +1,16 @@
 [package]
 name = "crates"
 version = "0.1.0"
+edition = "2021"
 
 [lib]
 name = "_lib"
 crate-type = ["cdylib"]
 path = "src/lib.rs"
 
-[dependencies]
-pyo3 = { version = "0.21.0", features = ["extension-module"] }
+[dependencies.pyo3]
+version = "0.21.0"
+features = ["extension-module"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 # See also PyO3 docs on writing Cargo.toml files at https://pyo3.rs
