@@ -1,5 +1,5 @@
 [package]
-name = "rustlib"
+name = "crates"
 version = "0.1.0"
 
 [lib]
