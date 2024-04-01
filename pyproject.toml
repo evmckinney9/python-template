@@ -24,7 +24,6 @@ format = [
     "black[jupyter]",
     "isort",
     "tomli",
-    "pydocstyle",
     "ruff",
     "docformatter[tomli]",
 ]
@@ -33,6 +32,13 @@ test = ["pytest"]
 [tool.ruff]
 target-version = "py39"
 fix = true
+extend-include = ["*.ipynb"]
+
+[tool.ruff.lint]
+select = ["D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
 [tool.isort]
 profile = "black"

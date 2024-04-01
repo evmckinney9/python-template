@@ -1,7 +1,6 @@
 exclude: ".*deprecated/"
 
 repos:
-
   - repo: https://github.com/evmckinney9/jupyter-notebook-naming-hook
     rev: v0.1.1
     hooks:
@@ -54,9 +53,3 @@ repos:
       - id: docformatter
         additional_dependencies: [tomli]
         args: [--in-place]
-
-  - repo: https://github.com/pycqa/pydocstyle
-    rev: 6.3.0
-    hooks:
-      - id: pydocstyle
-        additional_dependencies: [tomli]

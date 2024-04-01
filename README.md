@@ -53,7 +53,7 @@ This project uses various tools and configurations to maintain a high standard o
 - **Black formatter**: The code is automatically formatted using the [Black](https://github.com/psf/black) code formatter, ensuring a consistent code style across the project.
 - **isort**: Imports are sorted and organized using [isort](https://github.com/PyCQA/isort), following the Black-compatible profile.
 - **pre-commit**: A set of [pre-commit](https://pre-commit.com/) hooks are used to automatically check and enforce code quality standards, such as trailing whitespace removal, JSON formatting, and more.
-- **pydocstyle**: The project uses [pydocstyle](http://www.pydocstyle.org/) to enforce docstring conventions and ensure consistent documentation throughout the code.
+- **docformatter**: The docstrings are formatted using [docformatter](https://github.com/PyCQA/docformatter) to ensure consistency and readability.
 - **pytest**: Tests are written and executed using the [pytest](https://docs.pytest.org/en/latest/) framework.
 
 #### Change Permission of rename_project.sh
