@@ -14,7 +14,7 @@ If commit command makes changes (e.g. auto-fix formatting), then rerun `git add 
 
 ## Getting Started
 
-This repository is a template for creating new Python(3.9) projects. To use this template, click the "Use this template" button at the top of the repository page.
+This repository is a template for creating new Python(3.11) projects. To use this template, click the "Use this template" button at the top of the repository page.
 
 The `rename_project.sh` script will automatically rename all instances of the original project name, author name, and other details to match your new repository. The template uses Github Actions to automatically run this script when a new repository is created from the template. Before cloning, wait a moment for the renaming process to complete.
 
