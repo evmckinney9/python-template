@@ -79,7 +79,7 @@ jobs:
           mv .github/output_banner.png .github/banner.png
 
       - name: Commit changes and push back to GitHub
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Initial template rename"
           push_options: --force
