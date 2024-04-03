@@ -1,0 +1,62 @@
+name: CI
+
+on: # triggered by push tagged commits to main
+  push:
+    tags:
+      - 'v*'
+    branches:
+      - main
+
+jobs:
+  build_wheels:
+    if: github.repository != 'evmckinney9/python-template'
+    name: 'Build wheels on ${{ matrix.os }}'
+    runs-on: '${{ matrix.os }}'
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-13
+          - macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.17.0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 'cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}'
+          path: ./wheelhouse/*.whl
+  release:
+    if: github.repository != 'evmckinney9/python-template'
+    needs: build_wheels
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+      - name: Install and Generate Changelog
+        run: |
+          npm install -g conventional-changelog-cli
+          conventional-changelog -p angular -i CHANGELOG.md -s
+          git add CHANGELOG.md
+          git commit -m "docs(changelog): update CHANGELOG.md for release"
+          git push
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      - uses: actions/download-artifact@v4
+        with:
+          name: cibw-wheels-ubuntu-latest-0
+          path: ./wheelhouse
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./wheelhouse/*.whl
+          body_path: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
