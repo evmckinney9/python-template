@@ -37,6 +37,7 @@ jobs:
     env:
       CIBW_BEFORE_BUILD_LINUX: curl -sSf https://sh.rustup.rs | sh -s -- -y
       CIBW_ENVIRONMENT_LINUX: "PATH=$HOME/.cargo/bin:$PATH"
+      CIBW_SKIP: "cp36-* cp37-* cp38-* cp39-* pp* *-win32 *-musllinux* *_i686"
 
     steps:
 
@@ -72,15 +73,18 @@ jobs:
           fi
       - name: Set up Node.js
         uses: actions/setup-node@v4
-      - name: Install and Generate Changelog
+
+      - name: Generate Changelog
         run: |
           npm install -g conventional-changelog-cli
           conventional-changelog -p angular -i CHANGELOG.md -s
-          git add CHANGELOG.md
-          git commit -m "docs(changelog): update CHANGELOG.md for release"
-          git push
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: Commit changes and push back to GitHub
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "docs(changelog): update CHANGELOG.md for release"
+          file_pattern: CHANGELOG.md
+
       - uses: actions/download-artifact@v4
         with:
           name: cibw-wheels-ubuntu-latest-0
