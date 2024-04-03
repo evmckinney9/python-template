@@ -34,6 +34,10 @@ jobs:
           - windows-latest
           - macos-13
           - macos-14
+    env:
+      CIBW_BEFORE_BUILD_LINUX: curl -sSf https://sh.rustup.rs | sh -s -- -y
+      CIBW_ENVIRONMENT_LINUX: "PATH=$HOME/.cargo/bin:$PATH"
+
     steps:
 
       - uses: actions/checkout@v4

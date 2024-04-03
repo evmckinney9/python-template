@@ -30,7 +30,7 @@ format = [
 test = ["pytest"]
 
 [tool.ruff]
-target-version = "py39"
+target-version = "py311"
 fix = true
 extend-include = ["*.ipynb"]
 
