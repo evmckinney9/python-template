@@ -2,27 +2,36 @@ name: Rename the project from template
 
 on:
   create
-
 permissions: write-all
 
 jobs:
+  check-for-flag-file:
+    if: github.repository != 'evmckinney9/python-template' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    outputs:
+      continue: ${{ steps.flag-check.outputs.continue }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for template_flag.yml
+        id: flag-check
+        run: |
+          if [ -f .github/template_flag.yml ]; then
+            echo "continue=true" >> $GITHUB_OUTPUT
+          else
+            echo "continue=false" >> $GITHUB_OUTPUT
+          fi
+
   rename-project:
-    if: github.repository != 'evmckinney9/python-template' && github.event.ref == github.event.master_branch
+    needs: check-for-flag-file
+    if: needs.check-for-flag-file.outputs.continue == 'true'
     runs-on: ubuntu-latest
     steps:
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Check if template_flag.yml exists
-        id: check-template
-        if: ${{ hashFiles('.github/template_flag.yml') != '' }}
-        run: |
-            echo "rename_continue=true" >> $GITHUB_ENV
-
       - uses: actions/github-script@v6
-        if: env.rename_continue == 'true'
         id: fetch-repo-and-user-details
         with:
           script: |
@@ -50,7 +59,6 @@ jobs:
             return result
 
       - name: Rename the project
-        if: env.rename_continue == 'true'
         env:
           INFO: ${{ steps.fetch-repo-and-user-details.outputs.result }}
         run: |
@@ -66,13 +74,11 @@ jobs:
           .github/scripts/rename_project.sh -a "$REPO_OWNER_NAME" -n "$REPO_NAME" -u "$REPO_OWNER" -d "$REPO_DESC"
 
       - name: Overlay project name on banner
-        if: env.rename_continue == 'true'
         run: |
-          convert .github/banner.png -gravity center -pointsize 300 -fill black -stroke white -strokewidth 2 -font "Lato-Heavy" -annotate +0+0 "${{ env.REPO_NAME }}" .github/output_banner.png
+          convert .github/banner.png -gravity center -pointsize 300 -fill black -stroke white -strokewidth 2 -font "Lato-Heavy" -annotate +0+0 "${{ github.event.repository.name }}" .github/output_banner.png
           mv .github/output_banner.png .github/banner.png
 
       - name: Commit changes and push back to GitHub
-        if: env.rename_continue == 'true'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Initial template rename"

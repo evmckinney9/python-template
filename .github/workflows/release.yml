@@ -4,12 +4,27 @@ on: # triggered by push tagged commits to main
   push:
     tags:
       - 'v*'
-    branches:
-      - main
 
 jobs:
-  build_wheels:
+  check-for-flag-file:
     if: github.repository != 'evmckinney9/python-template'
+    runs-on: ubuntu-latest
+    outputs:
+      continue: ${{ steps.flag-check.outputs.continue }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for template_flag.yml
+        id: flag-check
+        run: |
+          if [ ! -f .github/template_flag.yml ]; then
+            echo "continue=true" >> $GITHUB_OUTPUT
+          else
+            echo "continue=false" >> $GITHUB_OUTPUT
+          fi
+
+  build_wheels:
+    needs: check-for-flag-file
+    if: needs.check-for-flag-file.outputs.continue == 'true'
     name: 'Build wheels on ${{ matrix.os }}'
     runs-on: '${{ matrix.os }}'
     strategy:
@@ -20,7 +35,14 @@ jobs:
           - macos-13
           - macos-14
     steps:
+
       - uses: actions/checkout@v4
+      - name: Check if template_flag.yml is gone
+        id: check-template
+        if: ${{ hashFiles('.github/template_flag.yml') == '' }}
+        run: |
+          echo "release_continue=true" >> $GITHUB_ENV
+
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
       - uses: actions/upload-artifact@v4
@@ -28,18 +50,24 @@ jobs:
           name: 'cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}'
           path: ./wheelhouse/*.whl
   release:
-    if: github.repository != 'evmckinney9/python-template'
-    needs: build_wheels
+    needs: [check-for-flag-file, build_wheels]
+    if: needs.check-for-flag-file.outputs.continue == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - uses: actions/checkout@v4
+      - name: Check for initial commit condition and exit if true
+        run: |
+          if [ -f .github/template_flag.yml ]; then
+            echo "Initial commit setup detected, exitting."
+            exit 0
+          fi
       - name: Set up Node.js
         uses: actions/setup-node@v4
-        with:
-          node-version: '16'
       - name: Install and Generate Changelog
         run: |
           npm install -g conventional-changelog-cli
