@@ -6,7 +6,7 @@ permissions: write-all
 
 jobs:
   check-for-flag-file:
-    if: github.repository != 'evmckinney9/python-template' && github.ref == 'refs/heads/main'
+    if: github.repository != 'evmckinney9/python-template'
     runs-on: ubuntu-latest
     outputs:
       continue: ${{ steps.flag-check.outputs.continue }}
