@@ -5,6 +5,9 @@ on: # triggered by push tagged commits to main
     tags:
       - 'v*'
 
+permissions:
+  contents: write
+
 jobs:
   check-for-flag-file:
     if: github.repository != 'evmckinney9/python-template'
@@ -77,22 +80,16 @@ jobs:
       - name: Generate Changelog
         run: |
           npm install -g conventional-changelog-cli
-          conventional-changelog -p angular -i CHANGELOG.md -s
-
-      - name: Commit changes and push back to GitHub
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "docs(changelog): update CHANGELOG.md for release"
-          file_pattern: CHANGELOG.md
+          conventional-changelog -p conventionalcommits -r 2 | tail -n +3 > CHANGELOG.tmp
 
       - uses: actions/download-artifact@v4
         with:
-          name: cibw-wheels-ubuntu-latest-0
           path: ./wheelhouse
+
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
-          files: ./wheelhouse/*.whl
-          body_path: CHANGELOG.md
+          files: ./wheelhouse/**/*.whl
+          body_path: CHANGELOG.tmp
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
