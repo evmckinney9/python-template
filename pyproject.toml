@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["ipykernel", "pre-commit", "pylatexenc"]
+dev = ["ipykernel", "pre-commit", "pylatexenc", "ipywidgets"]
 format = [
     "pre-commit",
     "black[jupyter]",
