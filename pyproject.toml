@@ -20,11 +20,9 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["ipykernel", "pre-commit", "pylatexenc", "ipywidgets"]
 format = [
-    "pre-commit",
-    "black[jupyter]",
-    "isort",
-    "tomli",
     "ruff",
+    # "black[jupyter]",
+    "tomli",
     "docformatter[tomli]",
 ]
 test = ["pytest"]
@@ -40,9 +38,6 @@ select = ["D"]
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
-[tool.isort]
-profile = "black"
-
 [[tool.setuptools-rust.ext-modules]]
 # Private Rust extension module to be nested into the Python package
 # https://github.com/PyO3/setuptools-rust?tab=readme-ov-file
@@ -52,3 +47,4 @@ binding = "PyO3"
 
 [tool.distutils.bdist_wheel]
 py_limited_api = "cp39"
+
