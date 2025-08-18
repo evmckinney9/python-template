@@ -22,8 +22,8 @@ dev = ["ipykernel", "pre-commit", "pylatexenc", "ipywidgets"]
 format = [
     "ruff",
     # "black[jupyter]",
-    "tomli",
-    "docformatter[tomli]",
+    # "tomli",
+    # "docformatter[tomli]",
 ]
 test = ["pytest"]
 
@@ -47,4 +47,3 @@ binding = "PyO3"
 
 [tool.distutils.bdist_wheel]
 py_limited_api = "cp39"
-
