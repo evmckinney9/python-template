@@ -21,6 +21,7 @@ dependencies = [
 dev = ["ipykernel", "pre-commit", "pylatexenc", "ipywidgets"]
 format = [
     "ruff",
+    "pre-commit",
     # "black[jupyter]",
     # "tomli",
     # "docformatter[tomli]",
@@ -33,7 +34,7 @@ fix = true
 extend-include = ["*.ipynb"]
 
 [tool.ruff.lint]
-select = ["D"]
+select = ["E", "F", "I", "UP", "B", "D"]  # pycodestyle, pyflakes, isort, pyupgrade, bugbear, docstrings
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
@@ -47,3 +48,4 @@ binding = "PyO3"
 
 [tool.distutils.bdist_wheel]
 py_limited_api = "cp39"
+
