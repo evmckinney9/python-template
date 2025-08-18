@@ -38,4 +38,3 @@ repos:
         args: [--pytest]
       - id: pretty-format-json
         args: [--autofix]
-
