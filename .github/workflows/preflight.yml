@@ -1,0 +1,22 @@
+name: Preflight
+on:
+  workflow_call:
+    outputs:
+      ok:
+        description: "Is it safe to run CI?"
+        value: ${{ jobs.preflight.outputs.ok }}
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    outputs:
+      ok: ${{ steps.chk.outputs.ok }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: chk
+        run: |
+          if [ "${{ github.repository }}" = "evmckinney9/python-template" ]; then
+            echo "ok=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          if [ -f .github/workflows/bootstrap.yml ]; then
+            echo "ok=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          echo "ok=true" >> "$GITHUB_OUTPUT"

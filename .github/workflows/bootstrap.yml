@@ -1,0 +1,167 @@
+# .github/workflows/bootstrap.yml
+name: Bootstrap (self-destruct)
+
+on:
+  create: {}
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+
+jobs:
+  run-once:
+    if: github.repository != 'evmckinney9/python-template'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python (for pre-commit + replacement script)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: |
+            **/pyproject.toml
+            **/poetry.lock
+            **/requirements*.txt
+
+      - name: Install format deps (optional)
+        run: pip install '.[format]' || true
+
+      - name: Compute replacement variables
+        id: vars
+        shell: bash
+        run: |
+          # Prefer owner.name if available; fall back to owner.login
+          AUTHOR_NAME='${{ github.event.repository.owner.name }}'
+          if [ -z "$AUTHOR_NAME" ] || [ "$AUTHOR_NAME" = "null" ]; then
+            AUTHOR_NAME='${{ github.event.repository.owner.login }}'
+          fi
+
+          PROJECT_NAME='${{ github.event.repository.name }}'
+          PROJECT_DESC='${{ github.event.repository.description }}'
+          GITHUB_USERNAME='${{ github.event.repository.owner.login }}'
+
+          echo "author_name=$AUTHOR_NAME"           >> "$GITHUB_OUTPUT"
+          echo "project_name=$PROJECT_NAME"         >> "$GITHUB_OUTPUT"
+          echo "project_description=$PROJECT_DESC"  >> "$GITHUB_OUTPUT"
+          echo "github_username=$GITHUB_USERNAME"   >> "$GITHUB_OUTPUT"
+
+      - name: In-place placeholder replacement (text files only)
+        env:
+          AUTHOR_NAME: ${{ steps.vars.outputs.author_name }}
+          PROJECT_NAME: ${{ steps.vars.outputs.project_name }}
+          PROJECT_DESC: ${{ steps.vars.outputs.project_description }}
+          GITHUB_USER: ${{ steps.vars.outputs.github_username }}
+        run: |
+          python - <<'PY'
+          import os, sys, subprocess, pathlib
+
+          # Placeholders and replacements (raw strings, any characters allowed)
+          repl = {
+              "{{author_name}}": os.environ.get("AUTHOR_NAME", "") or "",
+              "{{project_name}}": os.environ.get("PROJECT_NAME", "") or "",
+              "{{project_description}}": os.environ.get("PROJECT_DESC", "") or "",
+              "{{github_username}}": os.environ.get("GITHUB_USER", "") or "",
+          }
+
+          # Get tracked files
+          files = subprocess.check_output(["git", "ls-files", "-z"]).split(b"\x00")
+          root = pathlib.Path(".").resolve()
+
+          def is_text(p: pathlib.Path) -> bool:
+              try:
+                  b = p.read_bytes()
+                  # Heuristic: treat files with NUL byte as binary
+                  return b"\x00" not in b
+              except Exception:
+                  return False
+
+          # Avoid modifying this workflow as we are about to delete it anyway
+          skip_paths = {
+              ".github/workflows/bootstrap.yml",
+          }
+
+          for bpath in files:
+              if not bpath:
+                  continue
+              rel = bpath.decode("utf-8", "ignore")
+              if not rel or rel in skip_paths:
+                  continue
+              p = root / rel
+
+              # Skip obviously binary-ish extensions
+              if p.suffix.lower() in {".png", ".jpg", ".jpeg", ".gif", ".pdf", ".svg", ".ico", ".woff", ".woff2", ".ttf"}:
+                  continue
+              if not p.exists() or not p.is_file():
+                  continue
+              if not is_text(p):
+                  continue
+
+              try:
+                  s = p.read_text(encoding="utf-8")
+              except UnicodeDecodeError:
+                  # Skip files that fail utf-8 decoding
+                  continue
+
+              original = s
+              for k, v in repl.items():
+                  s = s.replace(k, v)
+
+              if s != original:
+                  p.write_text(s, encoding="utf-8")
+                  print(f"[renamed] {rel}")
+
+          PY
+
+      - name: Rename package directory if present
+        env:
+          PROJECT_NAME: ${{ steps.vars.outputs.project_name }}
+        run: |
+          sanitize() {
+            # Lowercase, replace non [a-z0-9_] with underscore, strip leading digits/underscores
+            echo "$1" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9_]+/_/g; s/^[_0-9]+//; s/_+/_/g; s/_$//'
+          }
+          SRC_DIR="src"
+          OLD="project_name"
+          if [ -d "$SRC_DIR/$OLD" ]; then
+            NEW=$(sanitize "$PROJECT_NAME")
+            if [ -z "$NEW" ]; then
+              echo "Sanitized project name empty; skipping rename."
+            elif [ "$NEW" = "$OLD" ]; then
+              echo "Sanitized name equals existing; skipping rename."
+            else
+              echo "Renaming $SRC_DIR/$OLD -> $SRC_DIR/$NEW"
+              git mv "$SRC_DIR/$OLD" "$SRC_DIR/$NEW"
+            fi
+          else
+            echo "No $SRC_DIR/$OLD directory; skipping package rename."
+          fi
+
+      - name: Replace README template if present
+        run: |
+          if [ -f template-README.md ]; then
+            cp template-README.md README.md
+            rm -f template-README.md
+          fi
+
+      - name: Remove legacy template flag if present (harmless if absent)
+        run: rm -f .github/template_flag.yml || true
+
+      - name: Run pre-commit (one-time)
+        run: pre-commit run --all-files || true
+
+      - name: Self-destruct (delete this workflow)
+        run: rm -f .github/workflows/bootstrap.yml
+
+      - name: Commit & push
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Bootstrap: initialize project and self-destruct" || echo "Nothing to commit"
+          git push

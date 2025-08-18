@@ -1,6 +1,6 @@
-name: CI
+name: CI (release)
 
-on: # triggered by push tagged commits to main
+on:
   push:
     tags:
       - 'v*'
@@ -9,28 +9,16 @@ permissions:
   contents: write
 
 jobs:
-  check-for-flag-file:
-    if: github.repository != 'evmckinney9/python-template'
-    runs-on: ubuntu-latest
-    outputs:
-      continue: ${{ steps.flag-check.outputs.continue }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: Check for template_flag.yml
-        id: flag-check
-        run: |
-          if [ ! -f .github/template_flag.yml ]; then
-            echo "continue=true" >> $GITHUB_OUTPUT
-          else
-            echo "continue=false" >> $GITHUB_OUTPUT
-          fi
+  preflight:
+    uses: ./.github/workflows/preflight.yml
 
   build_wheels:
-    needs: check-for-flag-file
-    if: needs.check-for-flag-file.outputs.continue == 'true'
-    name: 'Build wheels on ${{ matrix.os }}'
-    runs-on: '${{ matrix.os }}'
+    needs: preflight
+    if: needs.preflight.outputs.ok == 'true'
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-latest
@@ -38,36 +26,35 @@ jobs:
           - macos-13
           - macos-14
     env:
-      CIBW_BEFORE_BUILD_LINUX: curl -sSf https://sh.rustup.rs | sh -s -- -y
-      CIBW_ENVIRONMENT_LINUX: "PATH=$HOME/.cargo/bin:$PATH"
+      # Skip old Pythons / archs; tweak as you like
       CIBW_SKIP: "cp36-* cp37-* cp38-* pp* *-win32 *-musllinux* *_i686"
-
     steps:
+      - uses: actions/checkout@v4
+
+      # Install Rust (cross-platform)
+      - uses: dtolnay/rust-toolchain@stable
+
+      # Optional: if you need system deps, add them per OS here
+
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
-      - uses: actions/upload-artifact@v4
+
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
         with:
-          name: 'cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}'
+          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
-          
+
   release:
-    needs: [check-for-flag-file, build_wheels]
-    if: needs.check-for-flag-file.outputs.continue == 'true'
+    needs: [preflight, build_wheels]
+    if: needs.preflight.outputs.ok == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: actions/checkout@v4
-      - name: Check for initial commit condition and exit if true
-        run: |
-          if [ -f .github/template_flag.yml ]; then
-            echo "Initial commit setup detected, exitting."
-            exit 0
-          fi
-      - name: Set up Node.js
+      - name: Setup Node (for changelog)
         uses: actions/setup-node@v4
 
       - name: Generate Changelog
@@ -75,14 +62,16 @@ jobs:
           npm install -g conventional-changelog-cli
           conventional-changelog -p conventionalcommits -r 2 | tail -n +3 > CHANGELOG.tmp
 
-      - uses: actions/download-artifact@v4
+      - name: Download all wheel artifacts
+        uses: actions/download-artifact@v4
         with:
           path: ./wheelhouse
+          merge-multiple: true
 
-      - name: Create Release
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: ./wheelhouse/**/*.whl
           body_path: CHANGELOG.tmp
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
