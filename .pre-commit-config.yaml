@@ -38,10 +38,3 @@ repos:
         args: [--pytest-test-first]
       - id: pretty-format-json
         args: [--autofix]
-
-  - repo: https://github.com/PyCQA/docformatter
-    rev: v1.7.7
-    hooks:
-      - id: docformatter
-        additional_dependencies: [tomli]
-        args: [--in-place]
