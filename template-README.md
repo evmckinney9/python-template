@@ -1,7 +1,8 @@
 ## {{project_name}}
 
-![Tests](https://github.com/{{github_username}}/{{project_name}}/actions/workflows/tests.yml/badge.svg?branch=main)
-![Format Check](https://github.com/{{github_username}}/{{project_name}}/actions/workflows/format-check.yml/badge.svg?branch=main)
+![CI](https://github.com/{{github_username}}/{{project_name}}/actions/workflows/ci.yml/badge.svg?branch=main)
+![Python](https://img.shields.io/badge/python-3.10_|_3.11_|_3.12-blue.svg)
+![Ruff](https://img.shields.io/badge/linter-ruff-green.svg)
 <a href="https://colab.research.google.com/github/{{github_username}}/{{project_name}}/blob/main/src/notebooks/01_main.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 ## 📌 Project Overview
