@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["ipykernel", "pre-commit", "pylatexenc", "ipywidgets"]
+dev = ["ipykernel", "pylatexenc", "ipywidgets"]
 format = [
     "ruff",
     "pre-commit",
@@ -48,4 +48,5 @@ binding = "PyO3"
 
 [tool.distutils.bdist_wheel]
 py_limited_api = "cp39"
+
 
