@@ -5,7 +5,7 @@
 ![Ruff](https://img.shields.io/badge/linter-ruff-green.svg)
 <a href="https://colab.research.google.com/github/{{github_username}}/{{project_name}}/blob/main/src/notebooks/01_main.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
-## 📌 Project Overview
+## Project Overview
 - [Link to paper:](https://arxiv.org/)
 - **Overview**: {{project_description}}
 - **Objective**:
@@ -14,7 +14,7 @@
 > [!IMPORTANT]  
 > This is an important note. Make sure to fill out the "Overview," "Objective," and "Strategy" sections with specific information about your project.
 
-## 🌟 Key Features
+## Key Features
 
 - **Algorithm**: Defined in `src/**.py`
 
@@ -23,14 +23,14 @@
 > [!WARNING]  
 > This is a warning. Ensure to understand the algorithm and its limitations.
 
-## 📊 Results & Comparisons
+## Results & Comparisons
 
 - **Experiments**: Detailed in `src/notebooks/results`
 - **Findings**:
 
 ![image](https://github.com/{{github_username}}/{{project_name}}/images/plot.png)
 
-## 🚀 Getting Started
+## Getting Started
 
 To use {{project_name}}, install using the following command:
 
@@ -40,7 +40,7 @@ pip install -e git+https://github.com/{{github_username}}/{{project_name}}#egg={
 
 Then get started by exploring the main demo located at `src/{{project_name}}/notebooks/01_main.ipynb`.
 
-### 💻🐒 Usage
+### Usage
 
 ```python
 from {{project_name}} import *

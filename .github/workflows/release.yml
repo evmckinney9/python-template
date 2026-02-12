@@ -31,9 +31,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Install Rust (cross-platform)
-      - uses: dtolnay/rust-toolchain@stable
-
       # Optional: if you need system deps, add them per OS here
 
       - name: Build wheels

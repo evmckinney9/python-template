@@ -1,7 +1,6 @@
 # My opinionated python boilerplate.
 
 - **`make` commands**: Simplified commands for initializing, upgrading, cleaning, testing, and formatting the project.
-- **`PyO3` & `setuptools_rust`**: Added support for integrating Rust code into the Python package.
 - **GitHub Actions**: Automated building and releasing of Python wheels as GitHub releases.
 
 ### Configuration Choices
