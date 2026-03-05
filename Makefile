@@ -10,7 +10,7 @@ init:
 	$(PIP) install -e .[dev] --quiet
 	@$(PRE_COMMIT) install
 	@$(PRE_COMMIT) autoupdate
-	sudo chmod +x .git/hooks/pre-commit
+	chmod +x .git/hooks/pre-commit
 
 upgrade:
 	$(PIP) install --upgrade pip
@@ -49,3 +49,4 @@ precommit:
 	$(PRE_COMMIT) run --all-files
 
 .PHONY: init upgrade clean test precommit format
+
