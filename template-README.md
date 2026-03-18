@@ -32,10 +32,16 @@
 
 ## Getting Started
 
-To use {{project_name}}, install using the following command:
+**Install from source** (builds locally; requires Rust toolchain if Rust extensions are enabled):
 
 ```bash
-pip install -e git+https://github.com/{{github_username}}/{{project_name}}#egg={{project_name}}
+pip install git+https://github.com/{{github_username}}/{{project_name}}
+```
+
+**Install from a release wheel** (pre-built, no build dependencies needed):
+
+```bash
+pip install {{project_name}} --no-index --find-links https://github.com/{{github_username}}/{{project_name}}/releases/tag/vX.X.X
 ```
 
 Then get started by exploring the main demo located at `src/{{project_name}}/notebooks/01_main.ipynb`.

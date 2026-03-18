@@ -7,6 +7,7 @@ init:
 	rm -rf .venv
 	$(PYTHON_VERSION) -m venv .venv
 	@$(PIP) install --upgrade pip
+	#@$(PIP) install setuptools_rust
 	$(PIP) install -e .[dev] --quiet
 	@$(PRE_COMMIT) install
 	@$(PRE_COMMIT) autoupdate
@@ -48,5 +49,11 @@ precommit:
 	@$(PIP) install -e .[format] --quiet
 	$(PRE_COMMIT) run --all-files
 
-.PHONY: init upgrade clean test precommit format
+setup-rust:
+	bash .github/setup-rust.sh
+
+remove-rust:
+	bash .github/remove-rust.sh
+
+.PHONY: init upgrade clean test precommit format setup-rust remove-rust
 

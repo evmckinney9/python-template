@@ -23,12 +23,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
           cache: pip
           cache-dependency-path: |
             **/pyproject.toml
-            **/poetry.lock
-            **/requirements*.txt
+
+      - name: Set up Node (for conventional-commits hook)
+        uses: actions/setup-node@v4
 
       - name: Install pre-commit deps
         run: pip install '.[format]' --quiet
@@ -46,7 +47,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.11']  # add versions like ['3.10','3.11','3.12'] if desired
+        python-version: ['3.12']  # add versions like ['3.10','3.11','3.12'] if desired
     steps:
       - uses: actions/checkout@v4
 
@@ -57,8 +58,6 @@ jobs:
           cache: pip
           cache-dependency-path: |
             **/pyproject.toml
-            **/poetry.lock
-            **/requirements*.txt
 
       - name: Install test deps
         run: |

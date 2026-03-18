@@ -33,8 +33,11 @@ repos:
       - id: check-yaml
       - id: detect-private-key
       - id: check-added-large-files
+        args: [--maxkb=2000]
       - id: forbid-submodules
       - id: name-tests-test
-        args: [--pytest]
+        args: [--pytest-test-first]
+        exclude: ^src/tests/fixtures/
       - id: pretty-format-json
         args: [--autofix]
+        exclude: \.ipynb$

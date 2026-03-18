@@ -21,12 +21,10 @@ jobs:
       - name: Set up Python (for pre-commit + replacement script)
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
           cache: pip
           cache-dependency-path: |
             **/pyproject.toml
-            **/poetry.lock
-            **/requirements*.txt
 
       - name: Install format deps (optional)
         run: pip install '.[format]' || true
