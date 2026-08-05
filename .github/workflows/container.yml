@@ -1,0 +1,30 @@
+name: Container
+
+# Exercise the container definition only when it changes, so the dev/artifact
+# images can't rot while nobody is using them.
+on:
+  push:
+    branches: [main]
+    paths: [".devcontainer/**", ".dockerignore"]
+  pull_request:
+    branches: [main]
+    paths: [".devcontainer/**", ".dockerignore"]
+
+jobs:
+  preflight:
+    uses: ./.github/workflows/preflight.yml
+
+  build:
+    needs: preflight
+    if: needs.preflight.outputs.ok == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Build dev stage
+        run: docker build --target dev -f .devcontainer/Dockerfile .
+
+      - name: Build artifact stage (runs the test suite inside)
+        run: docker build --target artifact -f .devcontainer/Dockerfile .

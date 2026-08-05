@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper below."
+type: software
+title: "{{project_name}}"
+authors:
+  - name: "{{author_name}}"
+repository-code: "https://github.com/{{github_username}}/{{project_name}}"
+license: MIT
+# No version/date fields on purpose: pyproject.toml is the version's single
+# source of truth, and Zenodo stamps version + date per archived release.
+
+# GitHub's "Cite this repository" button emits this paper reference instead of
+# the software entry above (which Zenodo still uses for deposit metadata).
+# Fill in once the paper exists; delete the block if there is no paper.
+preferred-citation:
+  type: article
+  title: "PAPER TITLE"
+  authors:
+    - name: "{{author_name}}"
+  year: 2026
+  url: "https://arxiv.org/abs/XXXX.XXXXX"
+  # For a published venue version, prefer the DOI and venue fields:
+  # doi: 10.XXXX/XXXXXXX
+  # collection-title: "Proceedings of ..."

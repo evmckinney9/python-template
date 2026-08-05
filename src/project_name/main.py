@@ -16,7 +16,7 @@ class Electron:
         self.name = name
 
     @property
-    def charge(self):
+    def charge(self) -> int:
         """The charge of the electron."""
         return -1
 

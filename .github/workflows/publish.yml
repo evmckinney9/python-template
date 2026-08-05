@@ -1,0 +1,36 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  publish:
+    # Dormant until PyPI publishing is turned on: configure a trusted publisher
+    # on pypi.org for this workflow, then set the repository variable
+    # PYPI_PUBLISH=true (Settings -> Secrets and variables -> Actions).
+    if: vars.PYPI_PUBLISH == 'true'
+    runs-on: ubuntu-latest
+    environment: pypi
+    steps:
+      - name: Download release assets
+        run: |
+          mkdir -p dist
+          gh release download "${{ github.event.release.tag_name }}" \
+            --repo "${{ github.repository }}" \
+            --pattern "*.whl" --pattern "*.tar.gz" --dir dist
+          count=$(ls dist/* 2>/dev/null | wc -l)
+          if [ "$count" -eq 0 ]; then
+            echo "::error::No packages found on release ${{ github.event.release.tag_name }}."
+            exit 1
+          fi
+          echo "Found $count package(s)"
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/

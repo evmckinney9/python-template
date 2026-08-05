@@ -1,98 +1,34 @@
 ## {{project_name}}
 
-![CI](https://github.com/{{github_username}}/{{project_name}}/actions/workflows/ci.yml/badge.svg?branch=main)
-![Python](https://img.shields.io/badge/python-3.10_|_3.11_|_3.12-blue.svg)
-![Ruff](https://img.shields.io/badge/linter-ruff-green.svg)
-<a href="https://colab.research.google.com/github/{{github_username}}/{{project_name}}/blob/main/src/notebooks/01_main.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+[![CI](https://github.com/{{github_username}}/{{project_name}}/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/{{github_username}}/{{project_name}}/actions/workflows/ci.yml)
+[![PyPI - Version](https://img.shields.io/pypi/v/{{project_name}})](https://pypi.org/project/{{project_name}}/)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/{{github_username}}/{{project_name}}/blob/main/src/notebooks/01_main.ipynb)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/{{github_username}}/{{project_name}})
+<!-- Uncomment after enabling Zenodo archiving (see .github/CONTRIBUTING.md), using the concept DOI it mints: -->
+<!-- [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX) -->
 
-## Project Overview
-- [Link to paper:](https://arxiv.org/)
-- **Overview**: {{project_description}}
-- **Objective**:
-- **Strategy**:
+{{project_description}}
 
-> [!IMPORTANT]  
-> This is an important note. Make sure to fill out the "Overview," "Objective," and "Strategy" sections with specific information about your project.
+**[Documentation](https://{{github_username}}.github.io/{{project_name}}/)** | **[Paper](https://arxiv.org/abs/XXXX.XXXXX)**
 
-## Key Features
-
-- **Algorithm**: Defined in `src/**.py`
-
-![image](https://github.com/{{github_username}}/{{project_name}}/images/plot.png)
-
-> [!WARNING]  
-> This is a warning. Ensure to understand the algorithm and its limitations.
-
-## Results & Comparisons
-
-- **Experiments**: Detailed in `src/notebooks/results`
-- **Findings**:
-
-![image](https://github.com/{{github_username}}/{{project_name}}/images/plot.png)
-
-## Getting Started
-
-**Install from source** (builds locally; requires Rust toolchain if Rust extensions are enabled):
+______
 
 ```bash
-pip install git+https://github.com/{{github_username}}/{{project_name}}
+pip install {{project_name}}
 ```
 
-**Install from a release wheel** (pre-built, no build dependencies needed):
-
-```bash
-pip install {{project_name}} --no-index --find-links https://github.com/{{github_username}}/{{project_name}}/releases/tag/vX.X.X
-```
-
-Then get started by exploring the main demo located at `src/{{project_name}}/notebooks/01_main.ipynb`.
-
-### Usage
+Or from source (requires a Rust toolchain): `pip install git+https://github.com/{{github_username}}/{{project_name}}`
 
 ```python
-from {{project_name}} import *
-Foo()
+from {{project_name}}.main import Electron
+
+Electron().charge
 ```
 
-> [!NOTE]  
-> This is an important note. Make sure to consult the demo notebook for usage examples.
+<!-- When tutorials outgrow the one starter notebook, move user-facing
+     notebooks into docs/ (rendered by nbsphinx) and repoint the Colab badge
+     there; src/notebooks/ stays for development scratch. -->
 
-### 📋 Prerequisites
-
-- **Package Dependencies**:
-
-  - `package_name`
-
-- **Installation**:
-
-  - More details as needed.
-
-### Software Info💻🐒
-
-- **Please report any issues**. 😺
-- The main logic does ...
-- For more details, see code documentation or contact me.
-
-Additional utility commands available in the Makefile:
-
-- **make format**: Formats the codebase.
-- **make clean**: Cleans up temporary and unnecessary files.
-- **make test**: Runs tests to ensure code functionality.
-- For more information about the repository structure, visit my [python-template](https://github.com/evmckinney9/python-template).
-
-## 📚 Reference
-
-```bibtex
-@misc{cite_key,
-      title={{Title}},
-      author={{Author1 and Author2 and Author3}},
-      year={{Year}},
-      eprint={{eprint}},
-      archivePrefix={{ArchivePrefix}},
-      primaryClass={{PrimaryClass}}
-}
-```
-
-## 👯 Contributors
-<a href = "https://github.com/{{github_username}}/{{project_name}}/graphs/contributors">
-  <img src = "https://contrib.rocks/image?repo={{github_username}}/{{project_name}}"/>
-</a>
+> [!IMPORTANT]
+> This software is provided as-is with no guarantee of support or maintenance. Bug reports and pull requests are welcome, but there is no commitment to respond or resolve issues on any timeline.

@@ -1,0 +1,10 @@
+.git
+.venv
+crates/target
+docs/_build
+docs/jupyter_execute
+docs/apidocs/stubs
+**/__pycache__
+*.egg-info
+dist
+build

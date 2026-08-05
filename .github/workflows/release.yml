@@ -1,9 +1,9 @@
-name: CI (release)
+name: Release
 
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 permissions:
   contents: write
@@ -12,9 +12,31 @@ jobs:
   preflight:
     uses: ./.github/workflows/preflight.yml
 
-  build_wheels:
+  check_version:
+    name: Verify tag matches package version
     needs: preflight
     if: needs.preflight.outputs.ok == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Check version consistency
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          TAG_BASE="${TAG%%-*}"
+          PKG=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          RUST=$(python -c "import tomllib; print(tomllib.load(open('crates/Cargo.toml','rb'))['package']['version'])")
+          if [ "$TAG_BASE" != "$PKG" ]; then
+            echo "::error::Tag v$TAG (base: $TAG_BASE) does not match pyproject.toml version $PKG"
+            exit 1
+          fi
+          if [ "$PKG" != "$RUST" ]; then
+            echo "::error::crates/Cargo.toml version $RUST does not match pyproject.toml version $PKG"
+            exit 1
+          fi
+          echo "Version $PKG matches tag v$TAG and crates/Cargo.toml"
+
+  build_wheels:
+    needs: check_version
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -23,55 +45,84 @@ jobs:
         os:
           - ubuntu-latest
           - windows-latest
-          - macos-13
           - macos-14
     env:
-      # Skip old Pythons / archs; tweak as you like
-      CIBW_SKIP: "cp36-* cp37-* cp38-* pp* *-win32 *-musllinux* *_i686"
+      # abi3 (py_limited_api = cp310): one wheel per platform covers 3.10+
+      CIBW_BUILD: "cp310-*"
+      CIBW_SKIP: "pp* *-win32 *-musllinux* *_i686"
+      CIBW_BEFORE_ALL_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- -y"
+      CIBW_ENVIRONMENT_LINUX: 'PATH="$HOME/.cargo/bin:$PATH"'
     steps:
-      - uses: actions/checkout@v4
-
-      # Uncomment to install Rust toolchain (for setuptools_rust / PyO3)
-      # - uses: dtolnay/rust-toolchain@stable
-
-      # Optional: if you need system deps, add them per OS here
-
-      - name: Build wheels
-        uses: pypa/cibuildwheel@v2.22.0
-
-      - name: Upload wheels
-        uses: actions/upload-artifact@v4
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          workspaces: crates
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v3.4.0
+      - uses: actions/upload-artifact@v7
+        with:
+          name: cibw-wheels-${{ matrix.os }}
           path: ./wheelhouse/*.whl
 
-  release:
-    needs: [preflight, build_wheels]
-    if: needs.preflight.outputs.ok == 'true'
+  build_sdist:
+    name: Build source distribution
+    needs: check_version
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Build sdist
+        run: pipx run build --sdist
+      - uses: actions/upload-artifact@v7
+        with:
+          name: cibw-sdist
+          path: dist/*.tar.gz
+
+  freeze_env:
+    # Records the exact dependency versions the release was built against, as a
+    # release asset (reproducibility / artifact-evaluation evidence).
+    name: Record frozen environment
+    needs: check_version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: crates
+      - name: Freeze dependencies
+        run: |
+          pip install -e . --quiet
+          pip freeze --exclude-editable > requirements-frozen.txt
+      - uses: actions/upload-artifact@v7
+        with:
+          name: requirements-frozen
+          path: requirements-frozen.txt
+
+  release:
+    name: GitHub Release (draft)
+    needs: [build_wheels, build_sdist, freeze_env]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-
-      - name: Setup Node (for changelog)
-        uses: actions/setup-node@v4
-
-      - name: Generate Changelog
+      - uses: actions/setup-node@v6
+      - name: Generate changelog
         run: |
           npm install -g conventional-changelog-cli
           conventional-changelog -p conventionalcommits -r 2 | tail -n +3 > CHANGELOG.tmp
-
-      - name: Download all wheel artifacts
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
-          path: ./wheelhouse
+          path: dist
           merge-multiple: true
-
-      - name: Create GitHub Release
+      - name: Create draft release
         uses: softprops/action-gh-release@v2
         with:
-          files: ./wheelhouse/**/*.whl
+          draft: true
+          files: dist/*
           body_path: CHANGELOG.tmp
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

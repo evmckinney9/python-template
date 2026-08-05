@@ -4,13 +4,17 @@ version = "0.1.0"
 edition = "2021"
 
 [lib]
-name = "{{project_name}}_accelerate"
+# setuptools-rust renames the built artifact to the ext-module target declared
+# in pyproject.toml ({{project_name}}._accelerate); this is just the crate name.
+name = "_accelerate"
 crate-type = ["cdylib"]
 path = "src/lib.rs"
 
 [dependencies.pyo3]
-version = "0.20.3"
-features = ["extension-module", "abi3"]
+version = "0.27"
+features = ["extension-module", "abi3-py310"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-# See also PyO3 docs on writing Cargo.toml files at https://pyo3.rs
+[profile.release]
+lto = "fat"
+codegen-units = 1
+strip = "symbols"

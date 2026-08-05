@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "wheel"]      #, "setuptools_rust"]
+requires = ["setuptools", "wheel", "setuptools_rust"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,20 +7,35 @@ name = "{{project_name}}"
 description = "{{project_description}}"
 version = "0.1.0"
 authors = [{ name = "{{author_name}}" }]
-requires-python = ">=3.9"
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.10"
 dependencies = [
     "numpy",
     "matplotlib",
     "LovelyPlots",
-    # "qiskit",
-    # "qutip",
-    # "weylchamber",
 ]
 
+[project.urls]
+Homepage = "https://github.com/{{github_username}}/{{project_name}}"
+Repository = "https://github.com/{{github_username}}/{{project_name}}"
+Issues = "https://github.com/{{github_username}}/{{project_name}}/issues"
+
 [project.optional-dependencies]
-dev = ["ipykernel", "pylatexenc", "ipywidgets", "pre-commit"]
 format = ["pre-commit", "ruff"]
 test = ["pytest"]
+docs = [
+    "sphinx",
+    "furo",
+    "nbsphinx",
+    "ipykernel",
+    "pypandoc_binary", # bundles the pandoc binary nbsphinx needs
+]
+dev = [
+    "{{project_name}}[format,test,docs]",
+    "pylatexenc",
+    "ipywidgets",
+]
 
 [tool.ruff]
 target-version = "py312"
@@ -28,23 +43,29 @@ fix = true
 extend-include = ["*.ipynb"]
 
 [tool.ruff.lint]
-select = ["D"]
-ignore = ["D105"] # magic methods like __init__ don't need docstrings
+select = ["D", "ANN"]
+ignore = [
+    "D105",   # magic methods like __init__ don't need docstrings
+    "ANN401", # Any is legitimate at FFI / numpy seams
+    "ANN002", # *args doesn't need type annotations
+    "ANN003", # **kwargs doesn't need type annotations
+]
 
 [tool.ruff.lint.per-file-ignores]
-"scripts/**" = ["D"]
-"src/tests/**/*.py" = ["D1"]
-"**/*.ipynb" = ["D"]
+"scripts/**" = ["D", "ANN"]
+"src/tests/**/*.py" = ["D1", "ANN"]
+"**/*.ipynb" = ["D", "ANN"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
-# [[tool.setuptools-rust.ext-modules]]
-# # Private Rust extension module to be nested into the Python package
-# # https://github.com/PyO3/setuptools-rust?tab=readme-ov-file
-# target = "{{project_name}}._accelerate"
-# path = "crates/Cargo.toml"
-# binding = "PyO3"
+[[tool.setuptools-rust.ext-modules]]
+# Private Rust extension module nested into the Python package
+# https://github.com/PyO3/setuptools-rust
+target = "{{project_name}}._accelerate"
+path = "crates/Cargo.toml"
+binding = "PyO3"
+debug = false
 
-# [tool.distutils.bdist_wheel]
-# py_limited_api = "cp39"
+[tool.distutils.bdist_wheel]
+py_limited_api = "cp310"

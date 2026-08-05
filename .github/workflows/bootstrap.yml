@@ -16,10 +16,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Python (for pre-commit + replacement script)
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
           cache: pip
@@ -144,6 +144,12 @@ jobs:
           if [ -f template-README.md ]; then
             cp template-README.md README.md
             rm -f template-README.md
+          fi
+
+      - name: Promote artifact template if present
+        run: |
+          if [ -f template-ARTIFACT.md ]; then
+            mv template-ARTIFACT.md ARTIFACT.md
           fi
 
       - name: Remove legacy template flag if present (harmless if absent)

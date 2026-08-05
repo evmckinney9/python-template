@@ -12,7 +12,7 @@ jobs:
     outputs:
       ok: ${{ steps.chk.outputs.ok }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - id: chk
         run: |
           if [ "${{ github.repository }}" = "evmckinney9/python-template" ]; then

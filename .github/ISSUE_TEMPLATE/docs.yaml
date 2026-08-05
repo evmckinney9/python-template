@@ -1,5 +1,5 @@
 name: 📚 Documentation Update
-description: Request an update to the Python Project Documentation
+description: Request an update to the {{project_name}} documentation
 title: "[Documentation]: "
 labels: ["documentation"]
 assignees:
@@ -8,7 +8,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to propose an update for our Python Project Documentation!
+        Thanks for taking the time to propose a documentation update!
   - type: textarea
     id: documentation-section
     attributes:

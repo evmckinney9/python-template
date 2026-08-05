@@ -1,0 +1,9 @@
+{
+    "name": "{{project_name}}",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "..",
+        "target": "dev"
+    },
+    "postCreateCommand": "make init"
+}
