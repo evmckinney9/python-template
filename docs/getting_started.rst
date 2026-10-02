@@ -17,7 +17,7 @@ Or install a pre-built wheel from the
 Verify
 ------
 
-.. code-block:: python
+.. jupyter-execute::
 
    from {{project_name}}.main import Electron
 

@@ -5,15 +5,11 @@ labels: ["bug", "triage"]
 assignees:
   - {{github_username}}
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Thanks for taking the time to submit a bug report!
   - type: textarea
-    id: description
+    id: bug-description
     attributes:
       label: Bug Description
-      placeholder: Describe the bug you encountered here...
+      placeholder: Describe the expected and actual behavior.
     validations:
       required: true
   - type: textarea
@@ -22,6 +18,7 @@ body:
       label: Minimal Reproducible Example
       placeholder: |
         from {{project_name}} import ...
+        ...
       render: python
     validations:
       required: true

@@ -1,4 +1,3 @@
-include pyproject.toml
-include crates/Cargo.toml
-recursive-include crates *.rs
-recursive-include src *
+recursive-include tests *.py
+include crates/Cargo.toml crates/Cargo.lock
+recursive-include crates/src *.rs

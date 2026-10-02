@@ -7,17 +7,37 @@ name = "{{project_name}}"
 description = "{{project_description}}"
 version = "0.1.0"
 authors = [{ name = "{{author_name}}" }]
-license = { text = "MIT" }
+license = "MIT"
 readme = "README.md"
 requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Rust",
+]
 dependencies = [
     "numpy",
     "matplotlib",
     "LovelyPlots",
 ]
 
+[tool.setuptools]
+include-package-data = false
+
+[tool.distutils.bdist_wheel]
+py_limited_api = "cp310"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["{{project_name}}", "{{project_name}}.*"]
+namespaces = false
+
 [project.urls]
 Homepage = "https://github.com/{{github_username}}/{{project_name}}"
+Documentation = "https://{{github_username}}.github.io/{{project_name}}/"
 Repository = "https://github.com/{{github_username}}/{{project_name}}"
 Issues = "https://github.com/{{github_username}}/{{project_name}}/issues"
 
@@ -27,9 +47,12 @@ test = ["pytest"]
 docs = [
     "sphinx",
     "furo",
-    "nbsphinx",
+    "jupyter-sphinx",
+    "myst-parser",
     "ipykernel",
-    "pypandoc_binary", # bundles the pandoc binary nbsphinx needs
+    "sphinx-autobuild",
+    "sphinx-copybutton>=0.5,<1",
+    "sphinx-sitemap>=2.9,<3",
 ]
 dev = [
     "{{project_name}}[format,test,docs]",
@@ -37,13 +60,16 @@ dev = [
     "ipywidgets",
 ]
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--import-mode=importlib"
+filterwarnings = ["error"]
+
 [tool.ruff]
-target-version = "py312"
-fix = true
-extend-include = ["*.ipynb"]
+target-version = "py310"
 
 [tool.ruff.lint]
-select = ["D", "ANN"]
+select = ["D", "ANN", "F", "I"]
 ignore = [
     "D105",   # magic methods like __init__ don't need docstrings
     "ANN401", # Any is legitimate at FFI / numpy seams
@@ -52,8 +78,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"scripts/**" = ["D", "ANN"]
-"src/tests/**/*.py" = ["D1", "ANN"]
+"tests/**/*.py" = ["D1", "ANN"]
 "**/*.ipynb" = ["D", "ANN"]
 
 [tool.ruff.lint.pydocstyle]
@@ -65,7 +90,6 @@ convention = "google"
 target = "{{project_name}}._accelerate"
 path = "crates/Cargo.toml"
 binding = "PyO3"
+features = ["extension-module"]
+cargo-manifest-args = ["--locked"]
 debug = false
-
-[tool.distutils.bdist_wheel]
-py_limited_api = "cp310"

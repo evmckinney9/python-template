@@ -1,3 +1,5 @@
+//! Rust extension module, imported in Python as `{{project_name}}._accelerate`.
+
 use pyo3::prelude::*;
 use pyo3::wrap_pymodule;
 

@@ -8,7 +8,9 @@
 # ---- dev: the toolchain a contributor needs --------------------------------
 FROM mcr.microsoft.com/devcontainers/python:3.12 AS dev
 USER vscode
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal
+# No toolchain yet: the first cargo call in the repo installs the version in
+# rust-toolchain.toml.
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal --default-toolchain none
 ENV PATH="/home/vscode/.cargo/bin:${PATH}"
 
 # ---- artifact: frozen, self-verifying snapshot -----------------------------
@@ -18,5 +20,5 @@ WORKDIR /artifact
 RUN python -m venv /home/vscode/venv
 ENV PATH="/home/vscode/venv/bin:${PATH}"
 # Failing tests fail the image build: a broken artifact cannot be published.
-RUN pip install ".[test]" --quiet && pytest src/tests
+RUN pip install ".[test]" --quiet && pytest tests
 CMD ["bash"]

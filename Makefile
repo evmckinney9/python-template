@@ -1,69 +1,61 @@
-# ---- config ----------------------------------------------------------------
 PYTHON_VERSION = python3.12
 VENV           = .venv
-PIP            = $(VENV)/bin/pip
-PYTEST         = $(VENV)/bin/pytest
-PRE_COMMIT     = $(VENV)/bin/pre-commit
-# Every input that should retrigger a Rust extension rebuild: crate sources and
-# manifests/lockfile. target/ is pruned so we never stat the build cache.
-RUST_SRC       = $(shell find crates -name target -prune -o -type f \
-                   \( -name '*.rs' -o -name 'Cargo.toml' -o -name 'Cargo.lock' \) -print 2>/dev/null)
 
-# Use uv if it's on PATH (dramatically faster installs/builds).
 UV := $(shell command -v uv 2>/dev/null)
 ifdef UV
   INSTALL = uv pip install --python $(VENV)/bin/python
 else
-  INSTALL = $(PIP) install
+  INSTALL = $(VENV)/bin/pip install
 endif
 
 .DEFAULT_GOAL := help
-.PHONY: help init rebuild test format lint docs clean
+.PHONY: help init update-hooks reset-venv rebuild test format lint docs docs-serve docs-draft clean
 
-# ---- help ------------------------------------------------------------------
-help:  ## Show this help message
-	@awk 'BEGIN {FS = ":.*##"; printf "Targets:\n"} /^[a-zA-Z_-]+:.*?##/ {printf "  %-12s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+help:  ## List targets
+	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z_-]+:.*?##/ {printf "  %-24s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-# ---- environment setup -----------------------------------------------------
-init:  ## Create venv, install deps, set up pre-commit hooks (removes existing .venv/)
-	rm -rf $(VENV)
+$(VENV)/bin/python:
 	$(PYTHON_VERSION) -m venv $(VENV)
-	@$(PIP) install --upgrade pip
+
+init: $(VENV)/bin/python  ## Create the development environment and install git hooks
+	@$(VENV)/bin/pip install --upgrade pip --quiet
 	$(INSTALL) -e .[dev] --quiet
-	@$(PRE_COMMIT) install && $(PRE_COMMIT) install --hook-type commit-msg
-	@$(PRE_COMMIT) autoupdate
-	chmod +x .git/hooks/pre-commit
-	@touch $(VENV)/.built
+	@$(VENV)/bin/pre-commit install --hook-type pre-commit --hook-type commit-msg
 
-# ---- stamp file (rebuild Rust extension only when crate sources change) ----
-$(VENV)/.built: $(RUST_SRC) pyproject.toml
-	@$(INSTALL) -e . --quiet --no-deps
-	@touch $@
+update-hooks:  ## Bump hook revisions in .pre-commit-config.yaml
+	@$(VENV)/bin/pre-commit autoupdate
 
-# ---- dev loop --------------------------------------------------------------
-rebuild: $(VENV)/.built  ## Rebuild the Rust extension if crate sources changed
+reset-venv:  ## Delete the environment
+	rm -rf $(VENV)
 
-test: $(VENV)/.built  ## Run pytest
-	$(PYTEST) src/tests
+rebuild:  ## Rebuild the Rust extension
+	$(INSTALL) -e . --quiet --no-deps
 
-format:  ## Run all pre-commit hooks on all files
-	$(PRE_COMMIT) run --all-files
+test: rebuild  ## Run Rust and Python tests
+	cargo test --manifest-path crates/Cargo.toml --locked --all-targets
+	$(VENV)/bin/pytest tests
 
-lint:  ## Lint without modifying files
-	$(VENV)/bin/ruff check src
+format:  ## Format Rust and Python in place
+	cargo fmt --manifest-path crates/Cargo.toml
+	$(VENV)/bin/pre-commit run --all-files
 
-# ---- documentation ---------------------------------------------------------
-docs: $(VENV)/.built  ## Build the docs site (HTML in docs/_build/html)
+lint:  ## Check formatting, clippy, and ruff without changing anything
+	cargo fmt --manifest-path crates/Cargo.toml --check
+	cargo clippy --manifest-path crates/Cargo.toml --all-targets --all-features -- -D warnings
+	$(VENV)/bin/ruff check src tests docs
+	$(VENV)/bin/ruff format --check src tests docs
+
+docs: rebuild  ## Run the doc examples and build docs/_build/html
+	@rm -rf docs/_build/html docs/_build/jupyter_execute
 	$(VENV)/bin/sphinx-build -b html -W --keep-going docs docs/_build/html
 
-# ---- cleanup ---------------------------------------------------------------
-clean:  ## Remove temporary files and build artifacts
-	@find ./ -type f -name '*.pyc' -delete 2>/dev/null || true
-	@find ./ -type d -name '__pycache__' -exec rm -rf {} + 2>/dev/null || true
-	@find ./ -type f \( -name 'Thumbs.db' -o -name '*~' \) -delete 2>/dev/null || true
-	@rm -rf .cache .pytest_cache .mypy_cache .ruff_cache .tox/ \
-	        build dist *.egg-info htmlcov crates/target \
-	        src/__pycache__ src/*.egg-info \
-	        docs/_build docs/jupyter_execute docs/apidocs/stubs
-	@# built Rust extension + its rebuild stamp
-	@rm -f $(VENV)/.built src/*/_accelerate*.so
+docs-serve: rebuild  ## Serve docs at http://localhost:8000/ and rebuild on every edit
+	$(VENV)/bin/sphinx-autobuild --port 8000 docs docs/_build/html
+
+docs-draft: rebuild  ## Like docs-serve, but examples are shown unexecuted
+	DOCS_NOEXEC=1 $(VENV)/bin/sphinx-autobuild --port 8000 docs docs/_build/draft
+
+clean:  ## Remove build artifacts and caches
+	rm -rf build dist src/*.egg-info .pytest_cache .ruff_cache crates/target \
+	       docs/_build docs/apidocs/stubs src/*/_accelerate*.so src/*/_accelerate*.pyd
+	find src tests docs -name __pycache__ -type d -prune -exec rm -rf {} +

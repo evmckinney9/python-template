@@ -9,7 +9,7 @@ repos:
         stages: [commit-msg]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.17
+    rev: v0.16.7
     hooks:
       - id: ruff-check
         args: [--fix]
@@ -22,16 +22,9 @@ repos:
         args: [--markdown-linebreak-ext=md]
       - id: end-of-file-fixer
       - id: check-merge-conflict
-      - id: check-toml
-      - id: check-yaml
       - id: detect-private-key
       - id: check-added-large-files
         args: [--maxkb=2000]
       - id: name-tests-test
         args: [--pytest-test-first]
-        exclude: ^src/tests/(fixtures/|_common\.py$)
-
-  - repo: https://github.com/evmckinney9/jupyter-notebook-naming-hook
-    rev: v0.1.2
-    hooks:
-      - id: enforce-notebook-naming
+        exclude: ^tests/(fixtures/|_common\.py$)
