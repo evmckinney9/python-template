@@ -1,7 +1,7 @@
 [package]
 name = "{{project_name}}_accelerate"
 edition = "2024"
-rust-version = "1.97"
+rust-version = "1.99"
 license = "MIT"
 publish = false
 
@@ -14,7 +14,7 @@ path = "src/lib.rs"
 doctest = false
 
 [dependencies]
-pyo3 = { version = "0.29", features = ["abi3-py310"] }
+pyo3 = { version = "0.30", features = ["abi3-py311"] }
 
 [features]
 extension-module = ["pyo3/extension-module"]

@@ -2,7 +2,7 @@
 
 ## Setup
 
-Development uses Python 3.12 and the Rust version in
+Development uses Python 3.15 and the Rust version in
 [rust-toolchain.toml](../rust-toolchain.toml), which rustup installs automatically.
 
 ```sh
@@ -13,7 +13,7 @@ make init
 
 ### Dev container
 
-`.devcontainer/` defines a toolchain image (Python 3.12 and rustup) that runs
+`.devcontainer/` defines a toolchain image (Python 3.15 and rustup) that runs
 `make init` on create. It works with VS Code Dev Containers, GitHub Codespaces
 (badge in the README), and other dev-container tools, over Docker, Podman, or
 the Windows `wslc` runtime (set the extension's "Docker Path" to `wslc`).

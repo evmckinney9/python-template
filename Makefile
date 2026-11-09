@@ -1,4 +1,4 @@
-PYTHON_VERSION = python3.12
+PYTHON_VERSION = python3.15
 VENV           = .venv
 
 UV := $(shell command -v uv 2>/dev/null)

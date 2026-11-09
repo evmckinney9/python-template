@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/{{github_username}}/{{project_name}}/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/{{github_username}}/{{project_name}}/actions/workflows/ci.yml)
 [![PyPI - Version](https://img.shields.io/pypi/v/{{project_name}})](https://pypi.org/project/{{project_name}}/)
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-blue?logo=python&logoColor=white)](https://www.python.org/downloads/)
 [![Docs](https://github.com/{{github_username}}/{{project_name}}/actions/workflows/docs.yml/badge.svg?branch=main)](https://{{github_username}}.github.io/{{project_name}}/)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/{{github_username}}/{{project_name}}/blob/main/src/notebooks/01_main.ipynb)
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/{{github_username}}/{{project_name}})

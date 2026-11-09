@@ -6,7 +6,7 @@
 #               passing tests baked in; published to GHCR by publish-image.yml.
 
 # ---- dev: the toolchain a contributor needs --------------------------------
-FROM mcr.microsoft.com/devcontainers/python:3.12 AS dev
+FROM mcr.microsoft.com/devcontainers/python:3.15 AS dev
 USER vscode
 # No toolchain yet: the first cargo call in the repo installs the version in
 # rust-toolchain.toml.

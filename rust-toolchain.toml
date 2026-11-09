@@ -1,5 +1,5 @@
 [toolchain]
 # Keep in sync with crates/Cargo.toml's `rust-version`.
-channel = "1.97"
+channel = "1.99"
 components = ["rustfmt", "clippy"]
 profile = "minimal"

@@ -16,9 +16,9 @@ One paragraph: what the artifact contains and which of the paper's claims it sup
 | ----- | ----- |
 | Algorithm | |
 | Program | |
-| Compilation | Rust (version in `rust-toolchain.toml`, installed by `rustup`) via setuptools-rust; Python 3.12 |
+| Compilation | Rust (version in `rust-toolchain.toml`, installed by `rustup`) via setuptools-rust; Python 3.15 |
 | Data set | |
-| Run-time environment | Linux; container image (see below) or any host with Python 3.12 + Rust |
+| Run-time environment | Linux; container image (see below) or any host with Python 3.15 + Rust |
 | Hardware | x86-64; no accelerator required |
 | Metrics | |
 | Output | |
@@ -42,7 +42,7 @@ One paragraph: what the artifact contains and which of the paper's claims it sup
 
 ### Software dependencies
 
-Docker (for the container path), or Python 3.12 + `rustup` (for the source path).
+Docker (for the container path), or Python 3.15 + `rustup` (for the source path).
 
 ## Installation
 
